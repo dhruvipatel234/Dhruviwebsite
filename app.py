@@ -765,5 +765,7 @@ def updateusetpassword(id):
                 flash('New Password And Confim Password are not same')
                 return render_template('resetpasseord.html',Result = data[id ])
     return render_template('resetpasseord.html')
+
+    
 if __name__ == "__main__":
   app.run(debug=True)
