@@ -332,10 +332,13 @@ def update_user(id):
             cur.execute('UPDATE User_login SET email = %s,user_name = %s WHERE id = %s', (email, username, id))   
             db.connection.commit()
             cur.execute("select id,email,user_name from User_login") 
-            Result=cur.fetchall()
-            passmsg='email or username updated'
-            if 'loggedin' in session:
-                return redirect('/admin_home')
+            cur.fetchall()
+            msg = Message('System Update Username for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
+            msg.body = "Username :- " + username + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
+            mail.send(msg)
+            flash('email or username updated')
+           
+            return redirect('/admin_home')
 
 #============================================= Delete  ============================================================
 
@@ -395,7 +398,7 @@ def create_admin():
     return render_template('showadmin.html', Result = Result)
 
 
-#=====================   UPDATE USER   ============================================================
+#=====================   UPDATE ADMIN   ============================================================
 
 @app.route('/edit_admin/<id>', methods=['POST', 'GET'])
 def get_admin(id):
@@ -418,6 +421,9 @@ def update_admin(id):
         db.connection.commit()
         cur.execute("select id,email,password from Admin_login") 
         Result=cur.fetchall()
+        msg = Message('System Update your Password for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
+        msg.body = "\n Passeord :- " + password + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
+        mail.send(msg)
         flash('admin updated')
         return render_template('showadmin.html', Result = Result)
 
