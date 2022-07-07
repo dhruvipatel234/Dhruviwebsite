@@ -385,7 +385,9 @@ def create_admin():
         cur = db.connection.cursor()
         cur.execute(''' INSERT INTO Admin_login (email,password) VALUES(%s,md5(%s))''',(email,password))
         db.connection.commit()
-        
+        msg = Message('System Provide Username And Password for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
+        msg.body = "\n Passeord :- " + password + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/admin_login"
+        mail.send(msg)
         cur.execute("select id,email,password from Admin_login") 
         Result=cur.fetchall()
         cur.close()
