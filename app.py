@@ -757,6 +757,7 @@ def updateusetpassword(id):
                     return render_template('user_login.html')
             else:
 
+
                 cur = db.connection.cursor()
                 cur.execute("SELECT * FROM User_login  WHERE id = %s", (id) ) 
                 data = cur.fetchall()
@@ -766,6 +767,6 @@ def updateusetpassword(id):
                 return render_template('resetpasseord.html',Result = data[id ])
     return render_template('resetpasseord.html')
 
-    
+
 if __name__ == "__main__":
   app.run(debug=True)
