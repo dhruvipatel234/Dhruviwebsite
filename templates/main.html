@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <div class="main_bg">
+        <div class="main">
+            <div class="card main mb-5">
+                <div class="card-body">
+                    <p style="color: rgb(24, 43, 206); size: 20px;">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+
+                        {% endif %}
+                        {% endwith %}</p>
+                    <div class="row">
+                        <div class="col-lg-6 ">
+                            <img src="../static/images/login.jpg">
+                        </div>
+                        <div class="col-lg-6 loginadmin">
+                            <h2 class="card-title">System </h2>
+                            <p class="card-text">Are You Admin Or User</p>
+                            <a href="/admin_login" class="btn btn-primary">Admin</a>
+                            <a href="/user_login" class="btn btn-primary">User</a>
+                            <h5 class="mt-2">{{msg}}</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</body>

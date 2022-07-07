@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
+
+<body>
+    <ul class="nav nav-pills">
+
+        <li class="nav-item">
+            <a class="btn-primary btn m-1" href="/admin_logout">Logout</a>
+        </li>
+        <li class="nav-item">
+
+            <a class="btn-warning btn m-1" value="Go back!" onclick="history.back()"> Go back! </a>
+        </li>
+    </ul>
+    <div class="admin_bg">
+        <div class="container">
+        <div class="main" >
+            <div class="card main ">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <p style="color:green;">
+                                {{ passmsg }}
+                            </p>
+                            <p style="color: red;">{{error}}</p>
+                            <img src="../static/images/images (1).png">
+
+                            <p>{{Result.first_name}} {{Result.last_name}} </p>
+                            <p> Email :-{{values.email}} </p>
+                           <p> User name :-    {{values.user_name}} </p>
+
+
+                          
+
+
+                        </div>
+                        <div class="col-lg-8">
+                            <form action="/admin_update_profile/{{Result.id}}" method="post" novalidate="novalidate">
+
+                                <div class="row ">
+                                    <div class="col-lg-4 col-md-4 lable">
+                                        <div class="control-group form-group">
+                                            <label> First_name:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="fname" type="text"
+                                                    value="{{Result.first_name}}" required="required"
+                                                    data-validation-regex-regex="[A-Z]+[A-za-z]+"
+                                                    data-validation-regex-message="please enter string value">
+                                            </div>
+                                            <p style="color: red;">{{fname}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="control-group form-group lable">
+
+                                            <label> Last_name:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="lname" type="text"
+                                                    value="{{Result.last_name}}"
+                                                    data-validation-regex-regex="[A-Z]+[A-za-z]+"
+                                                    data-validation-regex-message="please enter string value">
+                                            </div>
+                                            <p style="color: red;">{{lname}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="control-group form-group lable">
+
+                                            <div class="controls">
+                                                <label>Date_of_birth:</label>
+                                                <input class="form-control" name="bob" type="date" max="2003-01-01"
+                                                    min="1953-01-01" value="{{Result.date_of_birth}}"
+                                                    required="required"
+                                                    data-validation-regex-message="your age must be 18 years old">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-lg-6 col-md-6 ">
+
+                                        <div class="control-group form-group lable">
+                                            <label>Mobile_number:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="mobile_no" type="text"
+                                                    value="{{Result.mobile_number}}"
+                                                    data-validation-regex-regex="[0-9]+"
+                                                    data-validation-regex-message="please enter digit value">
+                                            </div>
+                                            <p style="color: red;">{{mobileno}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 ">
+                                        <div class="control-group form-group lable">
+
+                                            <label>Gender:</label>
+                                            <div class="controls form-control">
+                                                
+                                                
+                                                <input  name="gender" type="radio"
+                                                    value="Male"> Male
+                                                    <input  name="gender" type="radio"
+                                                    value="Female"> Female  
+                                                    
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group form-group lable">
+                                    <label>Address:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="address" type="text"
+                                            value="{{Result.address}}" required="required"
+                                            data-validation-regex-regex="[A-Za-z0-9'\.\-\s\,]+"
+                                            data-validation-regex-message="please enter format value">
+                                    </div>
+                                    <p style="color: red;">{{address}}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="control-group form-group lable">
+                                            <label>City:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="city" type="text"
+                                                    value="{{Result.city}}" required="required"
+                                                    data-validation-regex-regex="[A-za-z]+"
+                                                    data-validation-regex-message="please enter string value">
+                                            </div>
+                                            <p style="color: red;">{{city}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="control-group form-group lable">
+                                            <label>State:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="state" type="text"
+                                                    value="{{Result.state}}" required="required"
+                                                    data-validation-regex-regex="[A-za-z]+"
+                                                    data-validation-regex-message="please enter string value">
+                                            </div>
+                                            <p style="color: red;">{{state}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="control-group form-group lable">
+                                            <label>Zipcode:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="zipcode" type="text"
+                                                    value="{{Result.zipcode}}" required="required"
+                                                    data-validation-regex-regex="[0-9]+"
+                                                    data-validation-regex-message="please enter digit ">
+                                            </div>
+                                            <p style="color: red;">{{zipcode}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+
+                                <button class="btn btn-primary  mb-3 px-4"> Edit User
+                                    Profile</button>
+
+
+                            </form>
+                        </div>
+                    </div>
+
+
+                    </h2>
+                    <p style="color: rgb(24, 43, 206);">
+
+                    </p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="user_bg">
+        <div class="form1">
+            <div class="card" style="width: 30rem;">
+
+                <div class="card-body">
+                    <h2 class="card-title">create your profile</h2>
+                    <form action="/admin_insert_profile" method="POST" novalidate="novalidate">
+                        <div class="control-group form-group">
+                            <label> First_name:</label>
+                            <div class="controls">
+                                <input class="form-control" name="fname" type="text" required="required"
+                                    data-validation-regex-regex="[A-za-z]+"
+                                    data-validation-regex-message="please enter string value">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+
+                            <label> Last_name:</label>
+                            <div class="controls">
+                                <input class="form-control" name="lname" type="text" required="required"
+                                    data-validation-regex-regex="[A-za-z]+"
+                                    data-validation-regex-message="please enter string value">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+
+                            <div class="controls">
+                                <label>date_of_birth:</label>
+                                <input class="form-control" name="bob" type="date" required="required">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+                            <label>mobile_number:</label>
+                            <div class="controls">
+                                <input class="form-control" name="mobile_no" type="text" required="required"
+                                    required="required" data-validation-regex-regex="[0-9]+"
+                                    data-validation-regex-message="please enter digit ">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+
+                            <label>gender:</label>
+                            <div class="controls">
+                                <div class="form-control">
+                                    <input name="gender" type="radio" value="Male">Male
+                                    <input name="gender" type="radio" value="Female">Female
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+                            <label>address:</label>
+                            <div class="controls">
+                                <input class="form-control" name="address" type="text" required="required"
+                                    data-validation-regex-regex="[A-Za-z0-9'\.\-\s\,]+"
+                                    data-validation-regex-message="please enter format value">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+
+                            <label>city:</label>
+                            <div class="controls">
+                                <input class="form-control" name="city" type="text" required="required"
+                                    data-validation-regex-regex="[A-za-z]+"
+                                    data-validation-regex-message="please enter string value">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+
+
+                            <label>state:</label>
+                            <div class="controls">
+                                <input class="form-control" name="state" type="text" required="required"
+                                    data-validation-regex-regex="[A-za-z]+"
+                                    data-validation-regex-message="please enter string value">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+
+
+                            <label>zipcode:</label>
+                            <div class="controls">
+                                <input class="form-control" name="zipcode" type="text" required="required"
+                                    data-validation-regex-regex="[0-9]+"
+                                    data-validation-regex-message="please enter digit ">
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+
+                            <button class="btn btn-primary" type="submit">Add
+                                Profile</button>
+                            <a href="/admin_home" class="btn btn-secondary">Close</a>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    });
+</script>
+
+</html>

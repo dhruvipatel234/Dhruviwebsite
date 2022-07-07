@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <div class="admin_bg " id="space">
+        <div class="container">
+            <div class="row">
+                <div class="col md-12 col-12">
+                    <div class="jumbotron p-3 col-12">
+                        <h2> Welcome : {{msg}} <a class="btn btn-primary float-right  p-2"
+                                href="/user_logout">Logout</a>
+                        </h2>
+                    </div>
+                    <div class="main" id="space">
+                        <div class="card main ">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p style="color: green; font-size: 20px;">
+                                            {% with messages = get_flashed_messages() %}
+                                            {% if messages %}
+                        
+                                            {% for message in messages %}
+                                            {{ message }}
+                                            {% endfor %}
+                        
+                                            {% endif %}
+                                            {% endwith %}
+                                           
+                                            {{passmsg}}
+                                        </p>
+                                        <p style="color: red;">{{error}}</p>
+                                        <img src="../static/images/images (1).png">
+
+                                        <p>{{Result.first_name}} {{Result.last_name}} </p>
+                                        <p> Email :- {{valuse.email}} </p>
+                                        <p> Username :- {{valuse.user_name}} </p>
+
+
+                                        <a href="/editprofile" class="btn btn-primary  mb-3 px-4"> Edit Your Profile</a>
+                                        <br>
+                                        <a href="/checkedprofile" class="btn btn-success  mb-3 px-4"> Add Your Profile
+                                            Data</a>
+
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="row ">
+                                            <div class="col-lg-4 col-md-4 lable">
+                                                <div class="control-group form-group">
+                                                    <label> First_name:</label>
+                                                    <div class="controls">
+                                                        <input class="form-control" name="fname" type="text"
+                                                            value="{{Result.first_name}}" required="required"
+                                                            data-validation-regex-regex="[A-za-z]+"
+                                                            data-validation-regex-message="please enter string value"
+                                                            readonly>
+                                                    </div>
+                                                    <p style="color: red;">{{fname}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="control-group form-group lable">
+
+                                                    <label> Last_name:</label>
+                                                    <div class="controls">
+                                                        <input class="form-control" name="lname" type="text"
+                                                            value="{{Result.last_name}}" readonly>
+                                                    </div>
+                                                    <p style="color: red;">{{lname}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="control-group form-group lable">
+
+                                                    <div class="controls">
+                                                        <label>Date_of_birth:</label>
+                                                        <input class="form-control" name="birthdt" type="date"
+                                                            max="2003-01-01" min="1953-01-01"
+                                                            value="{{Result.date_of_birth}}" required="required"
+                                                            data-validation-regex-message="your age must be 18 years old"
+                                                            readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-lg-6 col-md-6 ">
+
+                                                <div class="control-group form-group lable">
+                                                    <label>Mobile_number:</label>
+                                                    <div class="controls">
+                                                        <input class="form-control" name="mobile_no" type="text"
+                                                            value="{{Result.mobile_number}}" required="required"
+                                                            maxlength="10" minlength="10"
+                                                            data-validation-regex-regex="[0-9]+"
+                                                            data-validation-regex-message="please enter digit "
+                                                            readonly>
+                                                    </div>
+                                                    <p style="color: red;">{{mobileno}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 ">
+                                                <div class="control-group form-group lable">
+
+                                                    <label>Gender:</label>
+                                                    <div class="controls">
+
+                                                        <input class="form-control" name="mobile_no" type="text"
+                                                            value="{{Result.gender}}" readonly>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group form-group lable">
+                                            <label>Address:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="address" type="text"
+                                                    value="{{Result.address}}" required="required"
+                                                    data-validation-regex-regex="[A-Za-z0-9'\.\-\s\,]+"
+                                                    data-validation-regex-message="please enter format value" readonly>
+                                            </div>
+                                            <p style="color: red;">{{address}}</p>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="control-group form-group lable">
+                                                    <label>City:</label>
+                                                    <div class="controls">
+                                                        <input class="form-control" name="city" type="text"
+                                                            value="{{Result.city}}" required="required"
+                                                            data-validation-regex-regex="[A-za-z]+"
+                                                            data-validation-regex-message="please enter string value"
+                                                            readonly>
+                                                    </div>
+                                                    <p style="color: red;">{{city}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="control-group form-group lable">
+                                                    <label>State:</label>
+                                                    <div class="controls">
+                                                        <input class="form-control" name="state" type="text"
+                                                            value="{{Result.state}}" required="required"
+                                                            data-validation-regex-regex="[A-za-z]+"
+                                                            data-validation-regex-message="please enter string value"
+                                                            readonly>
+                                                    </div>
+                                                    <p style="color: red;">{{state}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="control-group form-group lable">
+                                                    <label>ZSipcode:</label>
+                                                    <div class="controls">
+                                                        <input class="form-control" name="zipcode" type="text"
+                                                            value="{{Result.zipcode}}" required="required"
+                                                            data-validation-regex-regex="[0-9]+"
+                                                            data-validation-regex-message="please enter digit "
+                                                            readonly>
+                                                    </div>
+                                                    <p style="color: red;">{{zipcode}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group form-group lable">
+                                            <label>Last Updated date:</label>
+                                            <div class="controls">
+                                                <input class="form-control" name="zipcode" type="text"
+                                                    value="{{Result.profile_updated_dt}}" required="required"
+                                                    data-validation-regex-regex="[0-9]+"
+                                                    data-validation-regex-message="please enter digit " readonly>
+                                            </div>
+                                            <p style="color: red;">{{zipcode}}</p>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+
+
+                                </h2>
+                                <p style="color: rgb(24, 43, 206);">
+
+                                </p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>

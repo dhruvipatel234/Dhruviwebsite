@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/admin_login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin_logout">Logout</a>
+        </li>
+      </ul> 
+    <div class="admin_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col md-12 col-12 mt-5 ">
+
+                    
+
+                        <h2>Admin <b>Details </b> <a href="/add_admin" class="btn btn-success float-right">Add New
+                                Admin</a> </h2>
+
+                        <table class="table table-hover table-dark mt-3">
+
+                            <p style="color: green; font-size: 20px;">
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+            
+                                {% for message in messages %}
+                                {{ message }}
+                                {% endfor %}
+            
+                                {% endif %}
+                                {% endwith %}
+                               
+                                {{passmsg}}
+                            </p>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+
+                                <th>Password</th>
+                                <th>Action</th>
+
+
+                            </tr>
+
+                            {% for row in Result %}
+                            <tr>
+                                <td>{{row.id}}</td>
+                                <td>{{row.email}}</td>
+                                <td>{{row.password}}</td>
+                                <td>
+                                    <a href="/edit_admin/{{row.id}}" class="btn btn-warning btn-xs">Edit</a>
+                                    <!-- data-toggle="modal" data-target="#modaledit"> -->
+
+                                    <a href="/delete_admin/{{row.id}}" class="btn btn-danger btn-xs"
+                                        onclick="return confirm('Are You Sure To Delete ?')">
+                                        Delete
+                                    </a>
+
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+.main {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: none;
+  height: auto;
+  width: auto;
+
+}
+
+.main h2 {
+  color: darkslategray;
+}
+
+main p {
+  color: rgb(11, 35, 35);
+  font-size: 25px;
+}
+
+.main_bg {
+  background-image: url("../images/main.avif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding-top: 82px;
+  padding-bottom: 82px;
+}
+
+.user_bg {
+  background-image: url("../images/images\ \(2\).jpeg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  height: auto;
+  width: auto;
+  padding: auto;
+}
+
+.loginadmin {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img {
+  overflow: hidden;
+  justify-content: center;
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media only screen and (max-width: 765px) {
+  #space {
+    padding-top: 10px;
+    padding-bottom: 0;
+  }}
+  #spacemain {
+    padding-top: auto;
+    padding-bottom: auto;
+  }
+
+@media only screen and (max-width: 992px) {
+  
+  .img {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+  .user_bg {
+    background-image: url("../images/images\ \(2\).jpeg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: auto;
+    width: auto;
+    padding: auto;
+  }
+  .admin_bg {
+    background-image: url("../images/istockphoto-1341630209-612x612.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: auto;
+    width: auto;
+    padding: auto;
+  }
+  .main_bg {
+    background-image: url("../images/main.avif");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding: 20px;
+  }
+}
+.admin_bg {
+  background-image: url("../images/istockphoto-1341630209-612x612.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  height: auto;
+  width: auto;
+  padding: auto;
+}
+
+.space {
+  padding-top: 130px;
+  padding-bottom: 135px;
+}
+
+h1 {
+  text-align: center;
+  color: #f5f5f5;
+}
+
+
+.button {
+
+  background: linear-gradient(121deg, rgba(113, 10, 117, 1) 22%, rgba(195, 19, 153, 1) 100%);
+  color: #fff;
+  font-size: 15px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+  border-radius: 5px;
+}
+
+.form1 {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: none;
+  height: auto;
+  width: auto;
+}
+
+
+.i {
+  margin-left: -30px;
+  cursor: pointer;
+
+}
+.lable{
+  text-align: left;
+}
+
+

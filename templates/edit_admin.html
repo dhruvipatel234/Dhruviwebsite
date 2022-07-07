@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script> 
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="admin_bg space" id="space">
+        <div class="form1">
+            <div class="card" style="width: 23rem;">
+
+                <div class="card-body">
+                    <h2 class="card-title">Admin Update</h2>
+                    <form action="/update_admin/{{Result.id}}" method="POST">
+                        <div class="form-group">
+                            <input name="id" type="hidden" value="{{Result.id}}">
+                            <label>Email:</label>
+                            <input class="form-control" name="email" id="email"type="email" value="{{Result.email}}">
+                        </div>
+                        <div class="form-group">
+
+                            <label>Password:</label>
+                            <input class="form-control" name="repassword" id="repassword" type="password" >
+                            <input type="checkbox" onclick="password()"> Show Password
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">Update</button>
+                            <a href="/show_admin" class="btn btn-secondary" >Close</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    });
+</script>
+</html>

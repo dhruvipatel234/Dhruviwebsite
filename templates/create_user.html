@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="admin_bg ">
+        <div class="form1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <img src="../static/images/download__1_-removebg-preview.png" class="img">
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="card-title">Add New User</h2>
+                            <form action="{{url_for('create_user')}}" method="POST" novalidate="novalidate"
+                                name="myform" onsubmit="createuser()">
+                                <div class="control-group form-group">
+                                    <input name="id" type="hidden">
+                                    <label>Email:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="email" type="email" required="required"
+                                            id="email"
+                                            data-validation-regex-regex="([A-Za-z0-9]+[.-_])*[A-Za-z0-9][email protected][A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"
+                                            data-validation-regex-message="please enter format value">
+                                    </div>
+                                    <p style="color: red;">{{email}}</p>
+                                </div>
+                                <div class="control-group form-group">
+                                    <label>User name:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="username" type="text" id="username"
+                                            required="required"
+                                            data-validation-regex-regex="[A-Za-z][A-Za-z0-9_]{7,29}$"
+                                            data-validation-regex-message="please enter format value">
+                                    </div>
+                                    <p style="color: red;">{{username}}</p>
+                                </div>
+                                <div class="control-group form-group">
+                                    <label>Password:</label>
+                                    <div class="controls">
+                                        <input class="form-control" id="repassword" name="repassword" type="password"
+                                            required="required"
+                                            data-validation-regex-regex="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                                            data-validation-regex-message="upercase,lowecase,digit and special character"
+                                            id="id_password">
+                                        <p style="color: red;">{{password}}</p>
+                                    </div>
+                                </div>
+                                <div class="control-group form-group">
+
+                                    <label>confirm password:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="confirmpassword" type="password"
+                                            data-validation-regex-regex="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                                            data-validation-regex-message="please enter lowecase,upercase ,digit and special chaecter"
+                                            id="repassword" 
+                                            data-validation-match-match="repassword">
+                                        <input type="checkbox" onclick="password()"> Show Password
+
+                                    </div>
+                                    <p style="color: red;">{{repassword}}</p>
+                                </div>
+                                <p style="color: red;">{{error}}</p>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Add User</button>
+                                    <a href="/admin_home" class="btn btn-secondary">Close</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    });
+</script>
+
+</html>

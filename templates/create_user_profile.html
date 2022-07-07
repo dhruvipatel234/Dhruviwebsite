@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
+
+<body>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="btn-success btn m-1 aria-current=" href="/user_login">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn-primary btn m-1" href="/user_logout">Logout</a>
+        </li>
+        <li class="nav-item">
+
+            <a class="btn-warning btn m-1" value="Go back!" onclick="history.back()"> Go back! </a>
+        </li>
+    </ul>
+
+    <div class="user_bg">
+        <div class="form1">
+            <div class="card">
+
+                <div class="card-body">
+                    <h2 class="card-title">create your profile</h2>
+                    <form action="/insert_profile" method="POST" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="control-group form-group">
+                                    <label> Email:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="" type="text"  value="{{values.email}}"
+                                            readonly>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="control-group form-group">
+                                    <label> User Name:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="" type="text"  value="{{values.user_name}}" readonly>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <div class="control-group form-group">
+                                    <label> First_name:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="fname" type="text" required="required"
+                                            data-validation-regex-regex="[A-Z]+[A-za-z]+"
+                                            data-validation-regex-message="please enter fist later capital ">
+                                    </div>
+                                    <p style="color: red;">{{fname}}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="control-group form-group">
+
+                                    <label> Last_name:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="lname" type="text" required="required"
+                                            data-validation-regex-regex="[A-Z]+[A-za-z]+"
+                                            data-validation-regex-message="please enter string value">
+                                    </div>
+                                    <p style="color: red;">{{lname}}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="control-group form-group">
+
+                                    <div class="controls">
+                                        <label>Date_of_birth:</label>
+                                        <input class="form-control" name="bob" type="date" required="required"
+                                            max="2003-01-01" min="1953-01-01" required="required"
+                                            data-validation-regex-message="your age must be 18 years old">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group form-group">
+
+                            <label>Mobile Number</label>
+
+                            <div class="controls">
+                                <input class="form-control" name="mobile_no" type="text" required="required"
+                                    data-validation-regex-regex="[0-9]{10}"
+                                    data-validation-regex-message="please enter string value">
+                            </div>
+                            <p style="color: red;">{{mobileno}}</p>
+                        </div>
+
+
+                        <div class="control-group form-group">
+
+                            <label>Gender:</label>
+                            <div class="controls">
+                                <div class="form-control">
+                                    <input name="gender" type="radio" value="Male">Male
+                                    <input name="gender" type="radio" value="Female">Female
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group form-group">
+                            <label>Address:</label>
+                            <div class="controls">
+                                <input class="form-control" name="address" type="text" required="required"
+                                    data-validation-regex-regex="[A-Za-z0-9'\.\-\s\,]+"
+                                    data-validation-regex-message="please enter format value">
+                            </div>
+                            <p style="color: red;">{{address}}</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="control-group form-group">
+
+                                    <label>City:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="city" type="text" required="required"
+                                            data-validation-regex-regex="[A-Z]+[A-za-z]+"
+                                            data-validation-regex-message="please enter fist later capital ">
+                                    </div>
+                                    <p style="color: red;">{{city}}</p>
+                                </div>
+                            </div>
+                            <div class="col-ld-4">
+                                <div class="control-group form-group">
+
+
+                                    <label>State:</label>
+                                    <div class="controls">
+
+                                        <select name="state" id="state" class="form-control">
+                                            <option class="form-control" value="Andhra Pradesh">Andhra Pradesh</option>
+                                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                            <option value="Assam">Assam</option>
+                                            <option value="Bihar">Bihar</option>
+                                            <option value="Chhattisgarh">Chhattisgarh</option>
+                                            <option value="Goa">Goa</option>
+                                            <option value="Gujarat">Gujarat</option>
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                            <option value="Jharkhand">Jharkhand</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Kerala">Kerala</option>
+                                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Manipur">Manipur</option>
+                                            <option value="Meghalaya">Meghalaya</option>
+                                            <option value="Mizoram">Mizoram</option>
+                                            <option value="Nagaland">Nagaland </option>
+                                            <option value="Odisha">Odisha</option>
+                                            <option value="Punjab">Punjab</option>
+                                            <option value="Rajasthan">Rajasthan</option>
+                                            <option value="Sikkim">Sikkim</option>
+                                            <option value="Tamil Nadu">Tamil Nadu</option>
+                                            <option value="Telangana">Telangana</option>
+                                            <option value="Tripura">Tripura</option>
+
+                                        </select>
+                                    </div>
+                                    <p style="color: red;">{{state}}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="control-group form-group">
+
+
+                                    <label>Zipcode:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="zipcode" type="text" required="required"
+                                            data-validation-regex-regex="[0-9]+"
+                                            data-validation-regex-message="please enter digit ">
+
+                                    </div>
+                                    <p style="color: red;">{{zipcode}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="color: red;">{{error}}</p>
+                        <div class="control-group form-group">
+
+                            <button class="btn btn-primary" type="submit">Add
+                                Profile</button>
+                            <a href="/userhome" class="btn btn-secondary">Close</a>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    });
+</script>
+
+</html>
