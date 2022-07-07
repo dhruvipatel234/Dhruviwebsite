@@ -732,15 +732,15 @@ def updateusetpassword(id):
         print(data[0])
         if not newpassword or not repassword:
             error='please fill newpassword and confirm password'
-            return render_template('editpassword.html',error=error,Result=data[0])
+            return render_template('resetpasseord.html',error=error,Result=data[0])
 
         elif not re.match('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}',newpassword):
             email='please enter upercase,lowecase,digit and special character'
-            return render_template('editpassword.html',newpassword=email,Result=data[0])
+            return render_template('resetpasseord.html',newpassword=email,Result=data[0])
 
         elif not re.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}',repassword):
             username='please enter upercase,lowecase,digit and special character'
-            return render_template('editpassword.html',repassword=username,Result=data[0])
+            return render_template('resetpasseord.html',repassword=username,Result=data[0])
         else:
             if newpassword==repassword:
                 cur = db.connection.cursor()
@@ -754,12 +754,12 @@ def updateusetpassword(id):
                     msg='your new password send in in your mail please check your email'
 
    
-                    return render_template('user_login.html')
+                    return render_template('user_login.html',msg=msg)
             else:
 
 
                 cur = db.connection.cursor()
-                cur.execute("SELECT * FROM User_login  WHERE id = %s", (id) ) 
+                cur.execute("SELECT * FROM User_login  WHERE id = %s", [id] ) 
                 data = cur.fetchall()
                 cur.close()
                 print(data[id])
