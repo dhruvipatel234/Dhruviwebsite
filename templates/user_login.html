@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
 <body>
-  <div class="user_bg space" id="space">
-    <div class="form1">
+  <div class="user_bg space">
+    <div class="form1 pt-5">
       <div class="card  ">
         <div class="card-body">
           <div class="row">
@@ -26,6 +26,19 @@
             <div class="col-lg-6">
 
               <h2 class="card-title"> User Login</h2>
+              <p style="color: red; font-size: 15px;">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+
+                {{passmsg}}
+            </p>
               <form action="{{url_for('user_login')}}" method="POST" name="myform" onsubmit="userlogin()" novalidate="novalidate">
                 <div class="control-group form-group">
 
@@ -39,6 +52,7 @@
                   <label>Password:</label>
                   <input class="form-control" name="repassword" type="password" id="repassword" id="id_password">
                   <input type="checkbox" onclick="password()"> Show Password 
+                  <a href="/sign_up" style="text-align:right;">Sign Up</a>
                 </div>
                 <a href="/email" style="text-align:right;">forgot Password</a>
                 <p style="color: red;">{{error}}</p>

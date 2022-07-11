@@ -28,6 +28,7 @@ main p {
   background-size: cover;
   padding-top: 82px;
   padding-bottom: 82px;
+  min-height: 630px;
 }
 
 .user_bg {
@@ -37,7 +38,7 @@ main p {
   background-size: cover;
   padding-top: 60px;
   padding-bottom: 60px;
-  height: auto;
+ min-height: 630px;
   width: auto;
   padding: auto;
 }
@@ -48,7 +49,14 @@ main p {
   margin-left: auto;
   margin-right: auto;
 }
-
+.admin_bg {
+  background-image: url("../images/istockphoto-1341630209-612x612.jpg");
+  background-repeat: 1;
+  background-position: center center;
+  background-size: cover;
+  min-height: 630px;
+  padding: auto;
+}
 .img {
   overflow: hidden;
   justify-content: center;
@@ -58,15 +66,6 @@ main p {
   margin-left: auto;
   margin-right: auto;
 }
-@media only screen and (max-width: 765px) {
-  #space {
-    padding-top: 10px;
-    padding-bottom: 0;
-  }}
-  #spacemain {
-    padding-top: auto;
-    padding-bottom: auto;
-  }
 
 @media only screen and (max-width: 992px) {
   
@@ -80,26 +79,32 @@ main p {
     margin-right: auto;
     
   }
-  .user_bg {
-    background-image: url("../images/images\ \(2\).jpeg");
-    background-repeat: no-repeat;
+  .admin_bg {
+    background-image: url("../images/istockphoto-1341630209-612x612.jpg");
+    background-repeat: 1;
     background-position: center center;
     background-size: cover;
-    padding-top: 0;
-    padding-bottom: 0;
-    height: auto;
-    width: auto;
+    min-height: 800px;
     padding: auto;
+  }
+  
+}
+
+@media only screen and (max-width: 769px) {
+  #space {
+    padding-top: 10px;
+    padding-bottom: 0;
+  }
+  #spacemain {
+    padding-top: auto;
+    padding-bottom: auto;
   }
   .admin_bg {
     background-image: url("../images/istockphoto-1341630209-612x612.jpg");
-    background-repeat: no-repeat;
+    background-repeat: 1;
     background-position: center center;
     background-size: cover;
-    padding-top: 0;
-    padding-bottom: 0;
-    height: auto;
-    width: auto;
+    min-height: 1020px;
     padding: auto;
   }
   .main_bg {
@@ -107,26 +112,25 @@ main p {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding: 20px;
+    padding-top: 82px;
+    padding-bottom: 82px;
+    min-height: 1020px;
+  }
+  .user_bg {
+    background-image: url("../images/images\ \(2\).jpeg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    min-height: 1020px;
+    width: auto;
+    padding: auto;
   }
 }
-.admin_bg {
-  background-image: url("../images/istockphoto-1341630209-612x612.jpg");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  padding-top: 60px;
-  padding-bottom: 60px;
-  height: auto;
-  width: auto;
-  padding: auto;
-}
-
 .space {
-  padding-top: 130px;
-  padding-bottom: 135px;
+  padding-top: 50px;
+  padding-bottom: 150px;
 }
 
 h1 {
@@ -150,7 +154,7 @@ h1 {
 .form1 {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  
   text-align: left;
   margin-left: auto;
   margin-right: auto;

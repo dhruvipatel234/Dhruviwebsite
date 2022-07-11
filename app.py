@@ -38,11 +38,13 @@ db=MySQL(app)
 @app.route("/")
 def choice():
     if 'userloggedin' in session :
+            flash('you alredy login our site')
             return redirect('userhome')
     
     else:
         if 'loggedin' in session:
-            return redirect('admin_first')
+            flash('you alredy login our site')
+            return redirect('admin_home')
         else:
             return render_template('main.html')
 
@@ -90,7 +92,7 @@ def admin_login():
                     session['id'] = admin['id']
                     session['email'] = admin['email'] 
                     flash('you sucseesfully login')                   
-                    return redirect('admin_first')
+                    return redirect('admin_home')
                 else:
                    error="username ans password are incorrect" 
                    return render_template("admin_login.html",error=error)
@@ -253,7 +255,8 @@ def editpassword(id):
 @app.route('/updatepassword/<id>', methods=['POST', 'GET'])
 def updatepassword(id):
     
-    if request.method == 'POST':  
+    if request.method == 'POST':
+          
         newpassword = request.form['newpassword']
         repassword = request.form['repassword']
         cur = db.connection.cursor()
@@ -277,14 +280,18 @@ def updatepassword(id):
                 cur = db.connection.cursor()
                 cur.execute('UPDATE User_login SET password = md5(%s) WHERE id = %s', (repassword, id))   
                 db.connection.commit()
-               
+                email = request.form['email']
+                msg = Message('System Provide New Password for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
+                msg.body = "Admin Update your Login password\n"+"\n Your New Password :- " + newpassword + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
+                mail.send(msg)
+                msg='your new password send in in your mail please check your email'
                 flash('password updated')
                 if 'loggedin' in session:
                     return redirect('/admin_home')
             else:
 
                 cur = db.connection.cursor()
-                cur.execute("SELECT * FROM User_login  WHERE id = %s", (id) ) 
+                cur.execute("SELECT * FROM User_login  WHERE id = %s", [id]) 
                 data = cur.fetchall()
                 cur.close()
                 print(data[id])
@@ -334,7 +341,7 @@ def update_user(id):
             cur.execute("select id,email,user_name from User_login") 
             cur.fetchall()
             msg = Message('System Update Username for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
-            msg.body = "Username :- " + username + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
+            msg.body = "New Username :- " + username + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
             mail.send(msg)
             flash('email or username updated')
            
@@ -463,7 +470,8 @@ def user_login():
                     session['userloggedin'] = True
                     session['id'] = Result['id']
 
-                    session['username'] = Result['user_name']       
+                    session['username'] = Result['user_name']
+                    flash('login successfully!!!!')       
                     return redirect('userhome')            
                 else:
                     error='please valid username or password'
@@ -483,7 +491,7 @@ def userhome():
         if cur.execute('SELECT * FROM Update_Profile WHERE user_id = %s', [uid])==1:
             data = cur.fetchall()
             print(data[0])
-            flash("you login successfully!")
+            
             return render_template('user_home.html',Result=data[0],msg=msg,valuse=valuse[0])
         else:
             
@@ -542,39 +550,42 @@ def insert_profile():
     state=request.form.get('state')
     zipcode=request.form.get('zipcode')
     updated_dt=date.today()
-
     cur = db.connection.cursor()
+    cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
+    values = cur.fetchall()
+    print(values[0])
+   
     if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode:
         error='please fill every field'
-        return render_template('create_user_profile.html',error=error)
+        return render_template('create_user_profile.html',error=error,values=values[0])
 
     elif not re.match('[A-za-z]+',firstname):
         fname='please enter only alphabet'
-        return render_template('create_user_profile.html',fname=fname)
+        return render_template('create_user_profile.html',fname=fname,values=values[0])
 
     elif not re.match('[A-za-z]+',lastname):
         lname='please enter only alphabet'
-        return render_template('create_user_profile.html',lname=lname)
+        return render_template('create_user_profile.html',lname=lname,values=values[0])
     
     elif not re.match('[0-9]+',mobileno):
         mobileno='please enter only digit'
-        return render_template('create_user_profile.html',mobileno=mobileno)
+        return render_template('create_user_profile.html',mobileno=mobileno,values=values[0])
 
     elif not re.match('[A-Za-z0-9\.\-\s\,]+',address):
         address='please enter only alphabet'
-        return render_template('create_user_profile.html',address=address)
+        return render_template('create_user_profile.html',address=address,values=values[0])
 
     elif not re.match('[A-za-z]+',city):
         city='please enter only alphabet'
-        return render_template('create_user_profile.html',city=city)
+        return render_template('create_user_profile.html',city=city,values=values[0])
 
     elif not re.match('[A-za-z]+',state):
         state='please enter only alphabet'
-        return render_template('create_user_profile.html',state=state)
+        return render_template('create_user_profile.html',state=state,values=values[0])
 
     elif not re.match('[0-9]+',zipcode):
         zipcode='please enter only alphabet'
-        return render_template('create_user_profile.html',zipcode=zipcode)
+        return render_template('create_user_profile.html',zipcode=zipcode,values=values[0])
     else:
         cur.execute(''' INSERT INTO Update_Profile (user_id,first_name,last_name,date_of_birth,mobile_number,gender,address,city,state,zipcode,profile_updated_dt)
         VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(uid,firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt))
@@ -641,7 +652,10 @@ def update_profile(id):
             state=request.form.get("state")
             zipcode=request.form.get("zipcode")
             updated_dt=date.today()
-
+            cur = db.connection.cursor()
+            cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
+            valuse = cur.fetchall()
+            print(valuse[0])
             cur = db.connection.cursor()
             cur.execute('SELECT * FROM Update_Profile  WHERE user_id = %s', [uid])
             data = cur.fetchall()
@@ -650,52 +664,48 @@ def update_profile(id):
 
             if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode:
                 error='please fill every field'
-                return render_template('edit_profile.html',error=error,Result=data[0])
+                return render_template('edit_profile.html',error=error,Result=data[0],valuse=valuse[0])
             elif not re.match('[A-za-z]+',firstname):
                 fname='please enter only alphabet'
-                return render_template('edit_profile.html',fname=fname,Result=data[0])
+                return render_template('edit_profile.html',fname=fname,Result=data[0],valuse=valuse[0])
 
             elif not re.match('[A-za-z]+',lastname):
                 lname='please enter only alphabet'
-                return render_template('edit_profile.html',lname=lname,Result=data[0])
+                return render_template('edit_profile.html',lname=lname,Result=data[0],valuse=valuse[0])
             
             elif not re.match('[0-9]+',mobileno):
                 mobileno='please enter only alphabet'
-                return render_template('edit_profile.html',mobileno=mobileno,Result=data[0])
+                return render_template('edit_profile.html',mobileno=mobileno,Result=data[0],valuse=valuse[0])
 
             elif not re.match('[A-Za-z0-9\.\-\s\,]+',address):
                 address='please enter only alphabet'
-                return render_template('edit_profile.html',address=address,Result=data[0])
+                return render_template('edit_profile.html',address=address,Result=data[0],valuse=valuse[0])
 
             elif not re.match('[A-za-z]+',city):
                 city='please enter only alphabet'
-                return render_template('edit_profile.html',city=city,Result=data[0])
+                return render_template('edit_profile.html',city=city,Result=data[0],valuse=valuse[0])
 
             elif not re.match('[A-za-z]+',state):
                 state='please enter only alphabet'
-                return render_template('edit_profile.html',state=state,Result=data[0])
+                return render_template('edit_profile.html',state=state,Result=data[0],valuse=valuse[0])
 
             elif not re.match('[0-9]+',zipcode):
                 zipcode='please enter only alphabet'
-                return render_template('edit_profile.html',zipcode=zipcode,Result=data[0])
+                return render_template('edit_profile.html',zipcode=zipcode,Result=data[0],valuse=valuse[0])
 
             else:
                 if cur.execute('UPDATE Update_Profile SET first_name = %s,last_name = %s ,date_of_birth= %s ,mobile_number=%s ,gender=%s ,address=%s ,city=%s,state=%s ,zipcode=%s ,profile_updated_dt=%s WHERE id = %s', (firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt, id))==1:
                     db.connection.commit()
                     
                     
-                    cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
-                    valuse = cur.fetchall()
-                    print(valuse[0])
-                    cur = db.connection.cursor()
-                    cur.close()
+                    
                     flash('You Update Your Profile')   
                     return redirect('/userhome')
                         
                      
                 else:
                     error=' Your Profile not updated'
-                    return render_template('user_home.html',error=error ,msg=msg)
+                    return render_template('user_home.html',error=error ,msg=msg,valuse=values[0])
                     
 
     else:
@@ -704,30 +714,32 @@ def update_profile(id):
     
 #===================== USER RESET THERE PASSWORD   =============================================
 @app.route('/email',methods=['POST', 'GET'])
-def email():
-    
+def email():    
     return render_template('email.html')
 
 @app.route('/sendmail',methods=['POST', 'GET'])
 def sendmail():
     email=request.form['email']
-    msg = Message('Reset Youe Password', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
-    msg.body = "\n\n you can click on this link and reset your password :-" + "http://127.0.0.1:5000/resetpassword/"
-    mail.send(msg)
-    msg='check your email'
     cur = db.connection.cursor()
-    if cur.execute('SELECT * FROM User_login where email=%s',[email])==1:
-        data = cur.fetchall()
-        print(data[0])
-        return render_template('resetpasseord.html',msg=msg,Result=data[0])
+    if cur.execute('select id from User_login where email = %s',[email])==1:
+        id=cur.fetchone()
+        send=id.get('id')
+        uid=str(send)
+        msg = Message('Reset Your Password', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
+        msg.body = "\n\n you can click on this link and reset your password :-" + "http://127.0.0.1:5000/updateuserpassword/"+uid
+        mail.send(msg)
+        flash('if you can reset your password  then you check your mail right now')
+        return redirect('email')
     else:
-        msg='fdnhgfjmn'
-        return render_template('email.html',msg=msg)
+        flash('You can not change password becuse you not exist our site')
+        return render_template('user_login.html')
+
         
 
 
-@app.route('/updateuserpassword/<id>', methods=['POST', 'GET'])
+@app.route('/updateuserpassword/<int:id>', methods=['POST', 'GET'])
 def updateusetpassword(id):
+   
     
     if request.method == 'POST':
         email=request.form['email']  
@@ -772,9 +784,67 @@ def updateusetpassword(id):
                 cur.close()
                 print(data[id])
                 flash('New Password And Confim Password are not same')
-                return render_template('resetpasseord.html',Result = data[id ])
-    return render_template('resetpasseord.html')
+                return render_template('resetpasseord.html',Result = data[id])
+    cur = db.connection.cursor()
+    cur.execute("SELECT * FROM User_login WHERE id = %s",[id]) 
+    data = cur.fetchall()
+    print(data[0])
+    flash('Now you set your new password')
+    return render_template('resetpasseord.html',Result = data[0])
 
+#=============================== SIGN UP USER   =============================================
+@app.route('/sign_up')
+def sign_up():
+    return render_template('sign_up.html')
+
+
+@app.route('/signup',methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        email =request.form.get("email")
+        username=request.form.get("username")
+        password=request.form.get("repassword")
+
+        if not email or not username or not password:
+            error='please fill every field'
+            return render_template('sign_up.html',error=error)
+        elif not re.match('([A-Za-z0-9]+[.-_])*[A-Za-z0-9][email protected][A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+',email):
+            email='please enter valid email'
+            return render_template('sign_up.html',email=email)
+        elif not re.match('[A-Za-z][A-Za-z0-9_]{7,29}$',username):
+            username='please enter valid username'
+            return render_template('sign_up.html',username=username)
+        elif not re.match('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}',password):
+            password='please enter valid password'
+            return render_template('sign_up.html',password=password)
+        else:
+            cur = db.connection.cursor()
+            cur.execute('SELECT email FROM User_login WHERE  email=%s', [email])
+            check = cur.fetchone()
+            mail=check.get('email')
+            A =request.form.get("email")
+            if A==mail:
+                flash('you can not sign up our site becuse you already exist')
+                return redirect('user_login')
+            else:
+                cur = db.connection.cursor()
+                cur.execute(''' INSERT INTO User_login (email,user_name,password) VALUES(%s,%s,md5(%s))''',(email,username,password))
+                db.connection.commit()
+                msg = Message('Username and passeord for system login', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
+                msg.body = "Username :- " + username + "\n Passeord :- " + password + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
+                mail.send(msg)
+                cur = db.connection.cursor() 
+                cur.execute('SELECT * FROM User_login WHERE  user_name = % s AND password = md5(%s)', (username, password ))
+                Result = cur.fetchone()
+
+                if Result:
+                    session['userloggedin'] = True
+                    session['id'] = Result['id']
+
+                    session['username'] = Result['user_name']
+
+                    return redirect('userhome') 
+            
 
 if __name__ == "__main__":
   app.run(debug=True)

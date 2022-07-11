@@ -23,26 +23,40 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6 ">
-                            <img src="../static/images/download.jpeg" >
+                            <img src="../static/images/download.jpeg">
                         </div>
                         <div class="col-lg-6">
                             <h2 class="card-title">Reset Password</h2>
 
-                            <form action="/sendmail" method="POST" novalidate="novalidate" onsubmit="resetpassword()">
-                               
-                                <div class="control-group form-group">
-<P>{{msg}}</P>
-                                    <label> Email:</label>
-                                    <div class="controls">
-                                      <input class="form-control" id="username" name="email" type="email">
-                                    </div>
-                                  </div>
-                                  <div class="form-group">
+                            <form action="/sendmail" method="POST" novalidate="novalidate">
+                                <p style="color: green; font-size: 10px;">
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
 
-                                    <button class="btn btn-primary" type="submit">Login</button>
+                                    {% for message in messages %}
+                                    {{ message }}
+                                    {% endfor %}
+
+                                    {% endif %}
+                                    {% endwith %}
+
+                                    
+                                </p>
+                                <div class="control-group form-group">
+                                    <P>{{msg}}</P>
+                                    
+                                    <label> Email:</label>
+                                    
+                                        <input class="form-control"  name="email" type="email" id="email" oninput="onemail()">
+                                        <p id="error" style="font-size: 10px; color:red;"></p>
+                                    
+                                </div>
+                                <div class="form-group">
+
+                                    <button class="btn btn-primary" type="submit" id="submit">Submit</button>
                                     <a href="/user_login" class="btn btn-secondary">Close</a>
-                  
-                                  </div>
+
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -51,4 +65,5 @@
         </div>
     </div>
 </body>
+
 </html>

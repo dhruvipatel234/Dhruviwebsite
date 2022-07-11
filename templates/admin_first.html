@@ -14,25 +14,32 @@
 </head>
 
 <body>
-    <div class="admin_bg space"  id="spacemain">
+    <div class="admin_bg space" id="spacemain">
         <div class="main mt-5 mb-5">
-            <div class="card main" style="width: 18rem;">
+            <div class="card main">
                 <div class="card-body">
-                    <p style="color: rgb(24, 43, 206); font-size: larger;">
+                    <p style="color: green; font-size: larger;">
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
-    
+
                         {% for message in messages %}
                         {{ message }}
                         {% endfor %}
-    
+
                         {% endif %}
                         {% endwith %}</p>
-                    <h2 class="card-title">Login</h2>
+                    <h1></h1>
 
-                    <p class="card-text">Are You Want To Show <b>User Details</b> Or <b>Admin Details</b></p>
-                    <a href="/admin_home" class="btn btn-primary">Users</a>
-                    <a href="/show_admin" class="btn btn-primary">Admins</a>
+
+                    <h3 class="card-title">Are You Want To Show <b>User Details</b> Or <b>Admin Details</b></h3>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <a href="/admin_home"><img src="../static/images/download (2).jpeg" </a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <a href="/show_admin"> <img src="../static/images/download (8).png"></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

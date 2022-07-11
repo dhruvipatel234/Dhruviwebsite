@@ -36,26 +36,22 @@
                         </div>
                         <div class="col-lg-6">
                             <h2 class="card-title">User Update</h2>
-                            <form action="/update/{{Result.id}}" method="POST" novalidate="novalidate" name="myform">
-                                onsubmit="edituser()">
+                            <form action="/update/{{Result.id}}" method="POST" novalidate="novalidate" name="myform" onsubmit="edituser()">
                                 <div class="control-group form-group">
                                     <input name="id" type="hidden" value="{{Result.id}}">
                                     <label>Email:</label>
-                                    <div class="controls">
-                                        <input class="form-control" name="email" value="{{Result.email}}" type="email"
-                                            required="required" id="email"
-                                            data-validation-regex-regex="([A-Za-z0-9]+[.-_])*[A-Za-z0-9][email protected][A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"
-                                            data-validation-regex-message="please enter format value">
-                                    </div>
+                                   
+                                        <input class="form-control" name="email" value="{{Result.email}}" type="email" id="email" oninput="onemail()">
+                                        <p id="error" style="font-size: 10px; color:red;"></p>
+                                   
                                     <p style="color: red;">{{email}}</p>
                                 </div>
                                 <div class="control-group form-group">
                                     <label>User name:</label>
                                     <div class="controls">
                                         <input class="form-control" name="username" value="{{Result.user_name}}"
-                                            type="text" id="username" required="required"
-                                            data-validation-regex-regex="[A-Za-z][A-Za-z0-9_]{7,29}$"
-                                            data-validation-regex-message="please enter format value">
+                                            type="text" id="username" oninput="onusername()">
+                                            <p id="uname" style="font-size: 10px; color:red;"></p>
                                     </div>
                                     <p style="color: red;">{{username}}</p>
                                 </div>
@@ -63,7 +59,7 @@
                                 <p style="color: red;">{{error}}</p>
 
                                 <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">Update</button>
+                                    <button class="btn btn-primary" type="submit" id="submit">Update</button>
                                     <a href="/admin_home" class="btn btn-secondary">Close</a>
                                 </div>
 

@@ -15,18 +15,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 </head>
 
-<body>
-    <ul class="nav nav-pills">
+<body><ul class="nav nav-pills">
+   
+    <li class="nav-item">
+        <a class="btn-primary btn m-1" href="/admin_logout" style="justify-content: end;">Logout</a>
+    </li>
+    <li class="nav-item">
 
-        <li class="nav-item">
-            <a class="btn-primary btn m-1" href="/admin_logout" style="justify-content: end;">Logout</a>
-        </li>
-        <li class="nav-item">
-
-            <a class="btn-warning btn m-1" value="Go back!" onclick="history.back()"> Go back! </a>
-        </li>
-    </ul>
-    <div class="admin_bg space">
+        <a class="btn-warning btn m-1" value="Go back!" onclick="history.back()"> Go back! </a>
+    </li>
+</ul>
+    <div class="user_bg ">
         <div class="form1">
             <div class="card">
                 <div class="card-body">
@@ -35,12 +34,9 @@
                             <img src="../static/images/download__1_-removebg-preview.png" class="img">
                         </div>
                         <div class="col-lg-6">
-                            <h2 class="card-title">Add New User</h2>
-                            <form action="{{url_for('create_user')}}" method="POST" onsubmit="createuser()"
-                                name="myform" id="login">
-
-
-
+                            <h2 class="card-title">Sign Up Page</h2>
+                            <form action="{{url_for('signup')}}" method="POST" novalidate="novalidate"
+                                name="myform" onsubmit="createuser()">
                                 <div class=" control-group">
                                     <label>Email:</label>
                                     <input class="form-control" name="email" type="email" id="email"
@@ -81,8 +77,8 @@
                                 </div>
                                 <p style="color: red;">{{error}}</p>
                                 <div class="form-group">
-                                    <button class="btn btn-primary" type="submit" id="submit">Add User</button>
-                                    <a href="/admin_home" class="btn btn-secondary">Close</a>
+                                    <button class="btn btn-primary" type="submit" id="submit">Sign Up</button>
+                                    <a href="/user_login" class="btn btn-secondary">Close</a>
                                 </div>
                             </form>
                         </div>
@@ -91,13 +87,10 @@
             </div>
         </div>
     </div>
-
 </body>
 <script>
-    $(document).ready(function () {
-        $('#login input').jqBootstrapValidation({
-            preventSubmit: true,
-        });
+    $(function () {
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
     });
 </script>
 

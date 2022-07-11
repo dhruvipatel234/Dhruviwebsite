@@ -49,16 +49,14 @@
 
                                 </div>
                                 <div class="control-group form-group">
-                                    <input name="id" type="hidden" value="{{Result.id}}">
                                     <label>Enter New Password:</label>
-                                    <div class="controls">
-                                        <input class="form-control" name="newpassword" type="password"
-                                            data-validation-regex-regex="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
-                                            data-validation-regex-message="please enter lowecase,upercase ,digit and special chaecter"
-                                            maxlength="15" minlength="5">
 
-                                    </div>
+                                    <input class="form-control" id="repassword" name="newpassword" type="password"
+                                        oninput="onpassword()">
+                                    
+                                    <p id="password" style="font-size: 10px; color:red;"></p>
                                     <p style="color: red;">{{newpassword}}</p>
+
                                 </div>
                                 <div class="control-group form-group">
 
@@ -75,20 +73,11 @@
                                 </div>
                                 <p style="color: red;">{{error}}</p>
                                 <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">Update</button>
+                                    <button class="btn btn-primary" type="submit" id="submit">Update</button>
                                     <a href="/user_login" class="btn btn-secondary">Close</a>
                                 </div>
-                                <p style=" color:red"> {% with messages = get_flashed_messages() %}
-                                    {% if messages %}
-
-                                    {% for message in messages %}
-                                    {{ message }}
-                                    {% endfor %}
-
-                                    {% endif %}
-                                    {% endwith %}
-                                </p>
-                                </p>
+                               
+                                
                             </form>
                         </div>
                     </div>

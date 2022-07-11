@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset='utf-8'>
-        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <title>Sanskar</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script>
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <script type="text/javascript" src="../static/js/main.js"></script>
-        <link rel="stylesheet" href="/static/css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    </head>
-    
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sanskar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
+
 <body>
     <div class="admin_bg">
         <div class="form1">
@@ -22,25 +22,26 @@
 
                 <div class="card-body">
                     <h2 class="card-title">Edit Profile</h2>
-                    <form method="POST" action="/update_profile/{{Result.id}}"  novalidate="novalidate">
+                    <form method="POST" action="/update_profile/{{Result.id}}" novalidate="novalidate">
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="control-group form-group">
                                     <label> Email:</label>
                                     <div class="controls">
-                                        <input class="form-control" name="" type="text"  value="{{valuse.email}}"
+                                        <input class="form-control" name="" type="text" value="{{valuse.email}}"
                                             readonly>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="control-group form-group">
                                     <label> User Name:</label>
                                     <div class="controls">
-                                        <input class="form-control" name="" type="text"  value="{{valuse.user_name}}" readonly>
+                                        <input class="form-control" name="" type="text" value="{{valuse.user_name}}"
+                                            readonly>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -49,11 +50,10 @@
                                 <div class="control-group form-group">
                                     <label> First_name:</label>
                                     <div class="controls">
-                                        <input class="form-control" name="fname" type="text" required="required"
-                                            data-validation-regex-regex="[A-Z]+[A-za-z]+" value="{{Result.first_name}}"
-                                            data-validation-regex-message="please enter first later capital ">
+                                        <input class="form-control" name="fname" type="text"
+                                            value="{{Result.first_name}}" id="uname" oninput="onname()">
                                     </div>
-                                    <p style="color: red;">{{fname}}</p>
+                                    <p style="color: red; font-size: 10px;" id="name">{{fname}}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -62,11 +62,9 @@
                                     <label> Last_name:</label>
                                     <div class="controls">
                                         <input class="form-control" name="lname" type="text"
-                                            value="{{Result.last_name}}"
-                                            data-validation-regex-regex="[A-z]+[A-za-z]+"
-                                            data-validation-regex-message="please enter string value">
+                                            value="{{Result.last_name}}" id="llname" oninput="onlastname()">
                                     </div>
-                                    <p style="color: red;">{{lname}}</p>
+                                    <p style="color: red; font-size: 10px;" id="lastname">{{lname}}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -85,30 +83,28 @@
                             <label>mobile_number:</label>
                             <div class="controls">
                                 <input class="form-control" name="mobile_no" type="text"
-                                    value="{{Result.mobile_number}}" required="required" maxlength="10" minlength="10"
-                                    data-validation-regex-regex="[0-9]+"
-                                    data-validation-regex-message="please enter digit ">
+                                    value="{{Result.mobile_number}}" required="required" oninput="onmoblienumber()"
+                                    id="mno" maxlength="10" minlength="10">
                             </div>
-                            <p style="color: red;">{{mobileno}}</p>
+                            <p style="color: red; font-size: 10px;" id="mnum">{{mobileno}}</p>
                         </div>
                         <div class="control-group form-group">
 
                             <label>gender:</label>
                             <div class="controls">
-                                <div class="form-control">
-                                    <input name="gender" type="radio" value="Male">Male
-                                    <input name="gender" type="radio" value="Female">Female
+                                <div class="form-control" >
+                                    <input name="gender" type="radio" value="Male" >Male
+                                    <input name="gender" type="radio" value="Female" >Female
+                                    
                                 </div>
                             </div>
                         </div>
                         <div class="control-group form-group">
                             <label>address:</label>
                             <div class="controls">
-                                <input class="form-control" name="address" type="text" value="{{Result.address}}"
-                                    required="required" data-validation-regex-regex="[A-Za-z0-9'\.\-\s\,]+"
-                                    data-validation-regex-message="please enter format value">
+                                <input class="form-control" name="address" type="text" value="{{Result.address}}" oninput="onaddress()" id="address">
                             </div>
-                            <p style="color: red;">{{address}}</p>
+                            <p style="color: red; font-size: 10px;" id="add">{{address}}</p>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
@@ -116,10 +112,9 @@
                                     <label>city:</label>
                                     <div class="controls">
                                         <input class="form-control" name="city" type="text" value="{{Result.city}}"
-                                            required="required" data-validation-regex-regex="[A-za-z]+"
-                                            data-validation-regex-message="please enter string value">
+                                            id="city" oninput="oncity()">
                                     </div>
-                                    <p style="color: red;">{{city}}</p>
+                                    <p style="color: red; font-size: 10px;" id="oncity">{{city}}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -162,23 +157,24 @@
                                 </div>
                                 <p style="color: red;">{{state}}</p>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="control-group form-group">
-                                <label>zipcode:</label>
-                                <div class="controls">
-                                    <input class="form-control" name="zipcode" type="text" value="{{Result.zipcode}}"
-                                        required="required" data-validation-regex-regex="[0-9]+"
-                                        data-validation-regex-message="please enter digit ">
+
+                            <div class="col-lg-4">
+                                <div class="control-group form-group">
+                                    <label>zipcode:</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="zipcode" type="text"
+                                            value="{{Result.zipcode}}" required="required"
+                                            data-validation-regex-regex="[0-9]+"
+                                            data-validation-regex-message="please enter digit ">
+                                    </div>
+                                    <p style="color: red;">{{zipcode}}</p>
                                 </div>
-                                <p style="color: red;">{{zipcode}}</p>
                             </div>
                         </div>
-
                         <p style="color: red;">{{error}}</p>
 
                         <div class="form-group control-group">
-                            <button class="btn btn-primary" type="submit">Update</button>
+                            <button class="btn btn-primary" type="submit" id="submit">Update</button>
                             <a href="/userhome" class="btn btn-secondary">Close</a>
                         </div>
 
