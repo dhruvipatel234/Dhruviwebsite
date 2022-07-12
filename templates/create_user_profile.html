@@ -35,7 +35,7 @@
 
                 <div class="card-body">
                     <h2 class="card-title">create your profile</h2>
-                    <form action="/insert_profile" method="POST" novalidate="novalidate" onsubmit="userprofile()">
+                    <form action="/insert_profile" method="POST" novalidate="novalidate" onsubmit="userprofile()" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="control-group form-group">
@@ -182,6 +182,16 @@
                                     <p style="color: red; font-size: 10px;" id="zipcode">{{zipcode}}</p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="control-group form-group">
+
+
+                            <label>Profile photo:</label>
+                            
+                                <input class="form-control" name="file"  type="file" >
+
+                            
+                            <p style="color: red; font-size: 10px;" id="zipcode">{{img}}</p>
                         </div>
                         <p style="color: red;">{{error}}</p>
                         <div class="control-group form-group">

@@ -42,11 +42,10 @@
                                             {{passmsg}}
                                         </p>
                                         <p style="color: red;">{{error}}</p>
-                                        <img src="../static/images/images (1).png">
-
+                                        <img src="{{ url_for('display_image', filename=filename) }}" class="profileimg" > 
                                         <p>{{Result.first_name}} {{Result.last_name}} </p>
-                                        <p> Email :- {{valuse.email}} </p>
-                                        <p> Username :- {{valuse.user_name}} </p>
+                                        <p> <b>Email :- </b><u>{{valuse.email}}</u> </p>
+                                        <p> <b>Username :-</b><u> {{valuse.user_name}}</u> </p>
 
 
                                         <a href="/editprofile" class="btn btn-primary  mb-3 px-4"> Edit Your Profile</a>
@@ -164,7 +163,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="control-group form-group lable">
-                                                    <label>ZSipcode:</label>
+                                                    <label>Zipcode:</label>
                                                     <div class="controls">
                                                         <input class="form-control" name="zipcode" type="text"
                                                             value="{{Result.zipcode}}" required="required"

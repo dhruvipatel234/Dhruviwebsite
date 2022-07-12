@@ -22,7 +22,7 @@
 
                 <div class="card-body">
                     <h2 class="card-title">Edit Profile</h2>
-                    <form method="POST" action="/update_profile/{{Result.id}}" novalidate="novalidate">
+                    <form method="POST" action="/update_profile" novalidate="novalidate" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="control-group form-group">
@@ -169,6 +169,16 @@
                                     </div>
                                     <p style="color: red;">{{zipcode}}</p>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="control-group form-group">
+                                <label>Profile photo</label>
+                                <div class="controls">
+                                    <input class="form-control" name="file" type="file" value="{{Result.profile_photo}}"
+                                        readonly>
+                                </div>
+
                             </div>
                         </div>
                         <p style="color: red;">{{error}}</p>

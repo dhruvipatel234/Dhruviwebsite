@@ -85,22 +85,40 @@ function onemail()
 
 function onpassword()
 {
-  var email = document.getElementById("repassword").value;
+  var email = document.getElementById("newpassword").value;
   var x = document.getElementById("submit");
   var filter =/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
 
-  if (filter.test(email)) {
+  if (!filter.test(email)) {
+    document.getElementById("password").innerHTML =  "please enter upercase,lowecase,digit and special character how next fields";
+    x.disabled=true;
+    $('#username').hide();
+    $('#onrepassword').hide();
     x.disabled=false;
+  }
+  else {
+    
    
     $('#username').show();
     $('#onrepassword').show();
     document.getElementById("password").innerHTML =  "";
   }
+}
+function checkpassword()
+{
+  var email = document.getElementById("newpassword").value;
+  var x = document.getElementById("submit");
+  var pass =document.getElementById("repassword").value;
+
+  if (pass!=email) {
+   
+    x.disabled=false;
+    document.getElementById("aaa").innerHTML = "new password and confim password are nopt match";
+  }
   else {
-    document.getElementById("password").innerHTML =  "please enter upercase,lowecase,digit and special character how next fields";
     x.disabled=true;
-    $('#username').hide();
-    $('#onrepassword').hide();
+    document.getElementById("aaa").innerHTML = ""; 
+    
   }
 }
 function onusername()

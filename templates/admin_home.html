@@ -5,22 +5,8 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Sanskar</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <link rel="stylesheet" href="/static/css/style.css">
-
-    <script src='main.js'></script>
-    <!-- google icon link -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.6/jqBootstrapValidation.js"></script>
+
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js">
     </script>
@@ -28,6 +14,27 @@
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
     </script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <script src='main.js'></script>
+    <!-- google icon link -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+
+    <script>
+        $(document).ready(function () {
+            $("#table").dataTable();
+        });
+
+    </script>
+
 </head>
 
 <body>
@@ -44,40 +51,45 @@
         </li>
     </ul>
 
-    <div class="container">
-        <div class="mt-5">
+    <div class="container mt-5">
+        <h2>User <b>Details</b></h2> <a href="/add_user" class="btn btn-success  m-1"
+            style="justify-content: flex-end;">Add New User</a>
 
+        <a href="/show_admin" class="btn btn-secondary  m-1" style="justify-content: flex-end;">Show
+            Admin Details</a> </h2>
+        <p style="color: red;"> {{error}}</p>
+        <p style="color: green; font-size: 20px;">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
 
-            <h2>User <b>Details</b></h2> <a href="/add_user" class="btn btn-success  m-1" style="justify-content: flex-end;">Add New
-                User</a>  <a href="/show_admin" class="btn btn-secondary  m-1" style="justify-content: flex-end;">Show Admin Details</a> </h2>
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
 
-            <table class="table table-hover table-light mt-2 ">
-                <p style="color: red;"> {{error}}</p>
-                <p style="color: green; font-size: 20px;">
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
+            {% endif %}
+            {% endwith %}
 
-                    {% for message in messages %}
-                    {{ message }}
-                    {% endfor %}
+            {{passmsg}}
+        </p>
 
-                    {% endif %}
-                    {% endwith %}
+      
+            <table class="table table-striped text-left col-12"  id="table">
 
-                    {{passmsg}}
-                </p>
-
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Email</th>
                     <th>User_name</th>
-                    <th colspan="4">Action</th>
-
+                    <th>Action</th>
+                    
 
                 </tr>
+            </thead>
 
+            <tbody>
                 {% for row in Result %}
                 <tr>
+
                     <td>{{row.id}}</td>
                     <td>{{row.email}}</td>
                     <td>{{row.user_name}}</td>
@@ -85,42 +97,39 @@
                     <td>
 
                         <a href="/edit/{{row.id}}" onclick="return confirm('Are You Sure To Update ?')">
-                            <span class="material-icons">
+                            <span class="material-symbols-outlined">
                                 edit
                             </span></a>
-                    </td>
-                    <td>
+                    
                         <a href="/delete/{{row.id}}" onclick="return confirm('Are You Sure To Delete ?')">
-                            <span class="material-icons">
+                            <span class="material-symbols-outlined">
                                 delete
                             </span>
                         </a>
-                    </td>
-                    <td>
+                   
                         <a href="/showduseretails/{{row.id}}"
                             onclick="return confirm('Are You Sure To Update Profile ?')">
-                            <span class="material-icons">
+                            <span class="material-symbols-outlined ">
                                 account_circle
                             </span>
                         </a>
-                    </td>
-                    <td>
+                    
+
                         <a href="/editpassword/{{row.id}}"
                             onclick="return confirm('Are You Sure To Change Password ?')">
-                            <span class="material-icons">
-                                lock_open
+                            <span class="material-symbols-outlined">
+                                key
                             </span>
                         </a>
                     </td>
 
-
-
-                    </td>
                 </tr>
                 {% endfor%}
-                <ul class="uk-pagination" data-uk-pagination="{items:100, itemsOnPage:10}" ></ul>
-            </table>
-        </div>
+
+            </tbody>
+
+        </table>
+    </div>
     </div>
 
 
@@ -129,24 +138,12 @@
 
 
     </div>
-
-
 
 </body>
-<script>
-    $(document).ready(function () {
-        $('#dtBasicExample').DataTable();
-        $('.dataTables_length').addClass('bs-select');
-    });
-
-    $(document).ready(function () {
-        $('#mytable').DataTable();
-    });
-</script>
 
 
 
-</strong>
+
 
 
 </html>
