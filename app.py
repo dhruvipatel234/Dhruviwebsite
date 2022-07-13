@@ -621,7 +621,13 @@ def insert_profile():
             dob=request.form.get('bob')
             mobileno=request.form.get('mobile_no')
             gender=request.form.get('gender')
-            address=request.form.getinsert_user_profile()
+            address=request.form.get('address')
+            city=request.form.get("city")
+            state=request.form.get("state")
+            zipcode=request.form.get("zipcode")
+            file = request.files["file"]
+            pdf= request.files["pdf"]
+            updated_dt=date.today()
             cur = db.connection.cursor()
             cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
             values = cur.fetchall()
@@ -633,7 +639,8 @@ def insert_profile():
 
             elif not re.match('[A-za-z]+',firstname):
                 fname='please enter only alphabet'
-                return render_teinsert_user_profile
+                return render_template('create_user_profile.html',fname=fname,values=values[0])
+
             elif not re.match('[A-za-z]+',lastname):
                 lname='please enter only alphabet'
                 return render_template('create_user_profile.html',lname=lname,values=values[0])
@@ -647,9 +654,7 @@ def insert_profile():
                 return render_template('create_user_profile.html',address=address,values=values[0])
 
             elif not re.match('[A-za-z]+',city):
-                city='please enter only alphabet'
-                return render_template('create_user_profile.html',city=city,values=values[0])
-
+                city='please enter only alphabget'
             elif not re.match('[A-za-z]+',state):
                 state='please enter only alphabet'
                 return render_template('create_user_profile.html',state=state,values=values[0])
