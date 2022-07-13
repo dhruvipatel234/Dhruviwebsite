@@ -1,9 +1,9 @@
-<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+
     <title>Sanskar</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
 
@@ -18,26 +18,23 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <link rel="stylesheet" href="/static/css/style.css">
     <script type="text/javascript" src="../static/js/main.js"></script>
-    <script src='main.js'></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> -->
+
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script type="text/javascript" src="../static/js/main.js"></script>
+
     <!-- google icon link -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
 
-    <script>
-        $(document).ready(function () {
-            $("#table").dataTable();
-        });
 
-    </script>
 
 </head>
 
-<body>
+<body class="body">
     <ul class="nav nav-pills">
         <li class="nav-item">
             <a class="btn-success btn m-1 aria-current=" href="/user_login">Login</a>
@@ -50,100 +47,92 @@
             <a class="btn-warning btn m-1" value="Go back!" onclick="history.back()"> Go back! </a>
         </li>
     </ul>
+    <div class="mt-3" >
+        <div class="tablespace tablefont">
+            <h2>User <b>Details</b></h2> <a href="/add_user" class="btn btn-success  m-1"
+                style="justify-content: flex-end;">Add New User</a>
+            <a href="/show_admin" class="btn btn-warning  m-1" style="justify-content: flex-end;">Show Admin Details</a>
 
-    <div class="container mt-5">
-        <h2>User <b>Details</b></h2> <a href="/add_user" class="btn btn-success  m-1"
-            style="justify-content: flex-end;">Add New User</a>
+            <p style="color: red;"> {{error}}</p>
+            <p style="color: green; font-size: 20px;">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
 
-        <a href="/show_admin" class="btn btn-secondary  m-1" style="justify-content: flex-end;">Show
-            Admin Details</a> </h2>
-        <p style="color: red;"> {{error}}</p>
-        <p style="color: green; font-size: 20px;">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
 
-            {% for message in messages %}
-            {{ message }}
-            {% endfor %}
+                {% endif %}
+                {% endwith %}
 
-            {% endif %}
-            {% endwith %}
+                {{passmsg}}
+            </p>
 
-            {{passmsg}}
-        </p>
 
-      
-            <table class="table table-striped text-left col-12"  id="table">
+            <table class="table table-hover font responsive " id="table" >
 
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>User_name</th>
-                    <th>Action</th>
-                    
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>User_name</th>
+                        <th>Action</th>
 
-                </tr>
-            </thead>
 
-            <tbody>
-                {% for row in Result %}
-                <tr>
+                    </tr>
+                </thead>
 
-                    <td>{{row.id}}</td>
-                    <td>{{row.email}}</td>
-                    <td>{{row.user_name}}</td>
+                <tbody>
+                    {% for row in Result %}
+                    <tr class="font11">
 
-                    <td>
+                        <td>{{row.id}}</td>
+                        <td>{{row.email}}</td>
+                        <td>{{row.user_name}}</td>
 
-                        <a href="/edit/{{row.id}}" onclick="return confirm('Are You Sure To Update ?')">
-                            <span class="material-symbols-outlined">
-                                edit
-                            </span></a>
-                    
-                        <a href="/delete/{{row.id}}" onclick="return confirm('Are You Sure To Delete ?')">
-                            <span class="material-symbols-outlined">
-                                delete
-                            </span>
-                        </a>
-                   
-                        <a href="/showduseretails/{{row.id}}"
-                            onclick="return confirm('Are You Sure To Update Profile ?')">
-                            <span class="material-symbols-outlined ">
-                                account_circle
-                            </span>
-                        </a>
-                    
+                        <td>
 
-                        <a href="/editpassword/{{row.id}}"
-                            onclick="return confirm('Are You Sure To Change Password ?')">
-                            <span class="material-symbols-outlined">
-                                key
-                            </span>
-                        </a>
-                    </td>
+                            <a href="/edit/{{row.id}}"  onclick="return confirm('Are You Sure To Update ?')">
+                                <span class="material-symbols-outlined icon" >
+                                    edit</span></a>
 
-                </tr>
-                {% endfor%}
+                            <a href="/delete/{{row.id}}" id="icon" onclick="return confirm('Are You Sure To Delete ?')">
+                                <span class="material-symbols-outlined icon" >
+                                    delete
+                                </span>
+                            </a>
 
-            </tbody>
+                            <a href="/showduseretails/{{row.id}}" 
+                                onclick="return confirm('Are You Sure To Update Profile ?')">
+                                <span class="material-symbols-outlined icon" >
+                                    account_circle
+                                </span>
+                            </a>
 
-        </table>
-    </div>
+
+                            <a href="/editpassword/{{row.id}}" id="icon"
+                                onclick="return confirm('Are You Sure To Change Password ?')">
+                                <span class="material-symbols-outlined icon">
+                                    key
+                                </span>
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% endfor%}
+
+                </tbody>
+
+            </table>
+        </div>
     </div>
 
-
-
     </div>
-
-
-    </div>
-
 </body>
-
-
-
-
-
+<script>
+    $(document).ready(function () {
+        $("#table").dataTable();
+    });
+</script>
 
 </html>

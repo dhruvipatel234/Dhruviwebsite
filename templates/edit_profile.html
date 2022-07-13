@@ -22,6 +22,19 @@
 
                 <div class="card-body">
                     <h2 class="card-title">Edit Profile</h2>
+                    <p style="color: red; font-size: 20px;">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+    
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+    
+                        {% endif %}
+                        {% endwith %}
+                       
+                        {{passmsg}}
+                    </p>
                     <form method="POST" action="/update_profile" novalidate="novalidate" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
@@ -177,7 +190,7 @@
                                 <div class="control-group form-group">
                                     <label>Profile photo</label>
                                     <div class="controls">
-                                        <input class="form-control" name="file" type="file"
+                                        <input class="form-control" name="file" type="file" accept=".png ,.jpg"
                                             value="{{Result.profile_photo}}" readonly>
                                     </div>
 
@@ -188,7 +201,7 @@
                                 <div class="control-group form-group">
                                     <label>Birth Cartificate</label>
                                     <div class="controls">
-                                        <input class="form-control" name="pdf" type="file"
+                                        <input class="form-control" name="pdf" type="file" accept=".pdf"
                                              >
                                     </div>
 

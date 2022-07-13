@@ -1,5 +1,6 @@
 
 
+from unittest import result
 import PyPDF2
 import re
 from webbrowser import get
@@ -11,7 +12,7 @@ from flask_mysqldb import MySQL
 from datetime import date
 from datetime import timedelta
 from flask_mail import Mail, Message
-from sqlalchemy import values
+from sqlalchemy import false, true, values
 
 
 
@@ -613,96 +614,92 @@ def insert_user_profile():
 def insert_profile():
     if 'userloggedin' in session : 
         uid=session['id'] 
-        msg=session['username']          
-        firstname =request.form.get('fname')
-        lastname=request.form.get('lname')
-        dob=request.form.get('bob')
-        mobileno=request.form.get('mobile_no')
-        gender=request.form.get('gender')
-        address=request.form.get('address')
-        city=request.form.get('city')
-        state=request.form.get('state')
-        zipcode=request.form.get('zipcode')
-        file = request.files['file']
-        pdf = request.files['pdf']
-        updated_dt=date.today()
-        cur = db.connection.cursor()
-        cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
-        values = cur.fetchall()
-        print(values[0])
+        msg=session['username'] 
+        if request.method == 'POST':         
+            firstname =request.form.get('fname')
+            lastname=request.form.get('lname')
+            dob=request.form.get('bob')
+            mobileno=request.form.get('mobile_no')
+            gender=request.form.get('gender')
+            address=request.form.getinsert_user_profile()
+            cur = db.connection.cursor()
+            cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
+            values = cur.fetchall()
+            print(values[0])
 
-        if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode:
-            error='please fill every field'
-            return render_template('create_user_profile.html',error=error,values=values[0])
+            if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode:
+                error='please fill every field'
+                return render_template('create_user_profile.html',error=error,values=values[0])
 
-        elif not re.match('[A-za-z]+',firstname):
-            fname='please enter only alphabet'
-            return render_template('create_user_profile.html',fname=fname,values=values[0])
+            elif not re.match('[A-za-z]+',firstname):
+                fname='please enter only alphabet'
+                return render_teinsert_user_profile
+            elif not re.match('[A-za-z]+',lastname):
+                lname='please enter only alphabet'
+                return render_template('create_user_profile.html',lname=lname,values=values[0])
 
-        elif not re.match('[A-za-z]+',lastname):
-            lname='please enter only alphabet'
-            return render_template('create_user_profile.html',lname=lname,values=values[0])
+            elif not re.match('[0-9]+',mobileno):
+                mobileno='please enter only digit'
+                return render_template('create_user_profile.html',mobileno=mobileno,values=values[0])
 
-        elif not re.match('[0-9]+',mobileno):
-            mobileno='please enter only digit'
-            return render_template('create_user_profile.html',mobileno=mobileno,values=values[0])
+            elif not re.match('[A-Za-z0-9\.\-\s\,]+',address):
+                address='please enter only alphabet'
+                return render_template('create_user_profile.html',address=address,values=values[0])
 
-        elif not re.match('[A-Za-z0-9\.\-\s\,]+',address):
-            address='please enter only alphabet'
-            return render_template('create_user_profile.html',address=address,values=values[0])
+            elif not re.match('[A-za-z]+',city):
+                city='please enter only alphabet'
+                return render_template('create_user_profile.html',city=city,values=values[0])
 
-        elif not re.match('[A-za-z]+',city):
-            city='please enter only alphabet'
-            return render_template('create_user_profile.html',city=city,values=values[0])
+            elif not re.match('[A-za-z]+',state):
+                state='please enter only alphabet'
+                return render_template('create_user_profile.html',state=state,values=values[0])
 
-        elif not re.match('[A-za-z]+',state):
-            state='please enter only alphabet'
-            return render_template('create_user_profile.html',state=state,values=values[0])
-
-        elif not re.match('[0-9]+',zipcode):
-            zipcode='please enter only alphabet'
-            return render_template('create_user_profile.html',zipcode=zipcode,values=values[0])
-        elif file.filename == '':
-            img='No image selected for uploading'
-            return render_template('create_user_profile.html',img=img,values=values[0])
-        elif pdf == '':
-            img='No image selected for uploading'
-            return render_template('create_user_profile.html',img=img,values=values[0])
-        else:
-            filename = secure_filename(file.filename)
-            pdfnm = secure_filename(pdf.filename)
-            if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf'))==1:
-
-                cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
-                unm = cur.fetchone()
-                filename=unm.get('user_name')
-                aa=filename+'.png'
-                filename=aa
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                
-                pdfnm=unm.get('user_name')
-                aa=pdfnm+'.pdf'
-                pdfnm=aa
-                pdf.save(os.path.join(app.config['UPLOAD_FOLDER_A'], pdfnm))
-
-                cur.execute(''' INSERT INTO Update_Profile (user_id,first_name,last_name,date_of_birth,mobile_number,gender,address,city,state,zipcode,profile_updated_dt,profile_photo,certificate_of_dob)
-                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(uid,firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt,filename,pdfnm))
-                db.connection.commit()
-
-                cur.execute('SELECT * FROM Update_Profile WHERE  user_id = %s ', [uid] )
-                data=cur.fetchall()
-                print(data)
-
-                cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
-                valuse = cur.fetchall()
-                print(valuse[0])
-                
-                flash('Your Profile is created')
-                return render_template('user_home.html',msg=msg,Result=data[0],valuse=valuse[0],filename=filename,pdf=pdf)
+            elif not re.match('[0-9]+',zipcode):
+                zipcode='please enter only alphabet'
+                return render_template('create_user_profile.html',zipcode=zipcode,values=values[0])
+            elif file.filename == '':
+                img='No image selected for uploading'
+                return render_template('create_user_profile.html',img=img,values=values[0])
+            elif pdf == '':
+                img='No image selected for uploading'
+                return render_template('create_user_profile.html',img=img,values=values[0])
             else:
-               
-                img='use file estension .png and .jpg'
-                return render_template('create_user_profile.html',img=img,values=values[0]) 
+                filename = secure_filename(file.filename)
+                pdfnm = secure_filename(pdf.filename)
+                if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf'))==1:
+
+                    cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
+                    unm = cur.fetchone()
+                    filename=unm.get('user_name')
+                    aa=filename+'.png'
+                    filename=aa
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    pdfnm=unm.get('user_name')
+                    aa=pdfnm+'.pdf'
+                    pdfnm=aa
+                    pdf.save(os.path.join(app.config['UPLOAD_FOLDER_A'], pdfnm))
+
+                    cur.execute(''' INSERT INTO Update_Profile (user_id,first_name,last_name,date_of_birth,mobile_number,gender,address,city,state,zipcode,profile_updated_dt,profile_photo,certificate_of_dob)
+                    VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(uid,firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt,filename,pdfnm))
+                    db.connection.commit()
+
+                    cur.execute('SELECT * FROM Update_Profile WHERE  user_id = %s ', [uid] )
+                    data=cur.fetchall()
+                    print(data)
+
+                    cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
+                    valuse = cur.fetchall()
+                    print(valuse[0])
+
+                    flash('Your Profile is created')
+                    return render_template('user_home.html',msg=msg,Result=data[0],valuse=valuse[0],filename=filename,pdf=pdf)
+                else:
+                
+                    flash('use file estension .png and .jpg')
+        else:
+            return redirect('insert_user_profile')
+
     else:
         flash('login please')
         return redirect('user_login')
@@ -730,7 +727,7 @@ def display_pdf_admin(pdfnm):
 #===================== EDIT AND SHOW USER PROFILE   =============================================
 @app.route('/editprofile/',methods=['GET', 'POST'])
 def editprofile():
-   
+    if 'userloggedin' in session :
         uid=session['id']
         msg=session['username']
         cur = db.connection.cursor()
@@ -754,6 +751,9 @@ def editprofile():
             cur.close()
             flash('you not create your profile')
             return redirect('userhome')
+    else:
+        flash('login pleasse')
+        return redirect('user_login')
         
    
     
@@ -784,7 +784,8 @@ def update_profile():
             cur = db.connection.cursor()
             cur.execute('SELECT * FROM Update_Profile  WHERE user_id = %s', [uid])
             data = cur.fetchall()
-             
+            filename = secure_filename(file.filename)
+            pdfnm = secure_filename(pdf.filename) 
             print(data[0])   
 
             if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode:
@@ -817,15 +818,13 @@ def update_profile():
             elif not re.match('[0-9]+',zipcode):
                 zipcode='please enter only alphabet'
                 return render_template('edit_profile.html',zipcode=zipcode,Result=data[0],valuse=valuse[0])
-            elif file.filename == '':
+            
                 
                 
-                img='No image selected for uploading'
-                return render_template('edit_profile.html',img=img,values=values[0])
+               
             else:
-                filename = secure_filename(file.filename)
-                pdfnm = secure_filename(pdf.filename)
-                if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf'))==1:
+               
+                if filename.lower().endswith(('.png', '.jpg',)) and   pdfnm.lower().endswith(('.pdf'))==1:
                     cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
                     unm = cur.fetchone()
                     filename=unm.get('user_name')
@@ -844,13 +843,11 @@ def update_profile():
                     flash('You Update Your Profile')   
                     return redirect('userhome')
                 else:
-                     img='use file estension .png and .jpg for image'
-                     pdf=' and use ".pdf" for pdf'
-                return render_template('create_user_profile.html',img=img,values=values[0],pdf=pdf) 
+                    flash('asgfresdjyghufjkiygujtki8ogtrgterdhysgtfehyrd')
+        return redirect('editprofile')
 
-
-
-
+                
+                
     else:   
         flash("Please Login")
         return  redirect("user_login")
