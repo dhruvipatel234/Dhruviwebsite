@@ -1,9 +1,10 @@
 
 
-
+import PyPDF2
 import re
+from webbrowser import get
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, redirect,session,flash, url_for,\
+from flask import Flask, render_template, redirect,session,flash,send_from_directory, url_for,\
     request
 import os
 from flask_mysqldb import MySQL
@@ -33,6 +34,7 @@ app.config['MYSQL_DB']='system'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.permanent_session_lifetime = timedelta(minutes=100000)
 app.config['UPLOAD_FOLDER'] = "static/profilephoto/"
+app.config['UPLOAD_FOLDER_A'] = "static/pdf/"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
   
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
@@ -181,10 +183,15 @@ def showuserdetails(id):
             cur.execute('SELECT profile_photo FROM Update_Profile WHERE user_id = %s', [id])
             img=cur.fetchone()
             filename=img.get('profile_photo')
-            cur.close()   
+            
+            cur.execute('SELECT certificate_of_dob FROM Update_Profile WHERE user_id = %s', [id])
+            pdf=cur.fetchone()
+            pdfnm=pdf.get('certificate_of_dob')
+            
             print(data[0])  
-
-            return render_template('showuserdetails.html', Result=data[0],values=values[0],filename=filename)
+         
+    
+            return render_template('showuserdetails.html', Result=data[0],values=values[0],pdfnm=pdfnm,filename=filename)
         else:
             error='user not created there profile'
             cur.execute("select id,email,user_name,password from User_login") 
@@ -193,6 +200,8 @@ def showuserdetails(id):
     else:
         error='login please'
         return render_template('admin_login.html',error=error)
+
+
 
 @app.route('/admin_update_profile/<id>',methods=['GET', 'POST'])
 def admin_update_profile(id):
@@ -393,16 +402,24 @@ def delete_user(id):
     msg = Message('System provied login information', sender = 'dhruvikaneriya52@gmail.com', recipients = [send])
     msg.body = 'You will no longer be able to login to our website because we have deleted your login records.'
     mail.send(msg)
-    cur.execute('SELECT user_name FROM User_login WHERE id = %s', [id])
-    unm = cur.fetchone()
-    filename=unm.get('user_name')
-    aa=filename+'.png'
-    filename=aa
-    os.remove("static/profilephoto/"+ filename)
-    cur.execute('DELETE FROM User_login  WHERE id = {0}'.format(id)) 
-    
-    
-    db.connection.commit()
+    if cur.execute('SELECT * FROM Update_Profile WHERE user_id = %s', [id])==1:
+        cur.fetchall()
+        cur.execute('SELECT user_name FROM User_login WHERE id = %s', [id])
+        unm = cur.fetchone()
+        filename=unm.get('user_name')
+
+        aa=filename+'.png'
+        filename=aa
+        
+        os.remove("static/profilephoto/"+ filename)
+        pdf=unm.get('user_name')
+        pdfnm=pdf+'.pdf'
+        os.remove("static/pdf/"+ pdfnm)
+        cur.execute('DELETE FROM User_login  WHERE id = {0}'.format(id)) 
+        db.connection.commit()
+    else:
+        cur.execute('DELETE FROM User_login  WHERE id = {0}'.format(id)) 
+        db.connection.commit()
 
     
     flash('user deleted')
@@ -607,6 +624,7 @@ def insert_profile():
         state=request.form.get('state')
         zipcode=request.form.get('zipcode')
         file = request.files['file']
+        pdf = request.files['pdf']
         updated_dt=date.today()
         cur = db.connection.cursor()
         cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
@@ -647,9 +665,13 @@ def insert_profile():
         elif file.filename == '':
             img='No image selected for uploading'
             return render_template('create_user_profile.html',img=img,values=values[0])
+        elif pdf == '':
+            img='No image selected for uploading'
+            return render_template('create_user_profile.html',img=img,values=values[0])
         else:
             filename = secure_filename(file.filename)
-            if filename.lower().endswith(('.png', '.jpg',))==1:
+            pdfnm = secure_filename(pdf.filename)
+            if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf'))==1:
 
                 cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
                 unm = cur.fetchone()
@@ -657,9 +679,14 @@ def insert_profile():
                 aa=filename+'.png'
                 filename=aa
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                
+                pdfnm=unm.get('user_name')
+                aa=pdfnm+'.pdf'
+                pdfnm=aa
+                pdf.save(os.path.join(app.config['UPLOAD_FOLDER_A'], pdfnm))
 
-                cur.execute(''' INSERT INTO Update_Profile (user_id,first_name,last_name,date_of_birth,mobile_number,gender,address,city,state,zipcode,profile_updated_dt,profile_photo)
-                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(uid,firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt,filename))
+                cur.execute(''' INSERT INTO Update_Profile (user_id,first_name,last_name,date_of_birth,mobile_number,gender,address,city,state,zipcode,profile_updated_dt,profile_photo,certificate_of_dob)
+                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(uid,firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt,filename,pdfnm))
                 db.connection.commit()
 
                 cur.execute('SELECT * FROM Update_Profile WHERE  user_id = %s ', [uid] )
@@ -671,7 +698,7 @@ def insert_profile():
                 print(valuse[0])
                 
                 flash('Your Profile is created')
-                return render_template('user_home.html',msg=msg,Result=data[0],valuse=valuse[0],filename=filename)
+                return render_template('user_home.html',msg=msg,Result=data[0],valuse=valuse[0],filename=filename,pdf=pdf)
             else:
                
                 img='use file estension .png and .jpg'
@@ -685,6 +712,19 @@ def display_image(filename):
     
     return redirect(url_for('static', filename='profilephoto/' + filename))
 
+@app.route('/display_pdf')
+def display_pdf():
+    uid=session['id'] 
+    cur = db.connection.cursor()
+    cur.execute('SELECT certificate_of_dob FROM Update_Profile WHERE  user_id = %s ', [uid] )
+    pdf=cur.fetchone()
+    pdfnm=pdf.get('certificate_of_dob')
+    return redirect(url_for('static', filename='pdf/' + pdfnm))
+
+@app.route('/display_pdf_admin/<pdfnm>')
+def display_pdf_admin(pdfnm):
+   
+    return redirect(url_for('static', filename='pdf/' + pdfnm))
 
 
 #===================== EDIT AND SHOW USER PROFILE   =============================================
@@ -735,6 +775,7 @@ def update_profile():
             state=request.form.get("state")
             zipcode=request.form.get("zipcode")
             file = request.files["file"]
+            pdf= request.files["pdf"]
             updated_dt=date.today()
             cur = db.connection.cursor()
             cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
@@ -783,23 +824,34 @@ def update_profile():
                 return render_template('edit_profile.html',img=img,values=values[0])
             else:
                 filename = secure_filename(file.filename)
-                cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
-                unm = cur.fetchone()
-                filename=unm.get('user_name')
-                aa=filename+'.png'
-                filename=aa
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                cur.execute('UPDATE Update_Profile SET first_name = %s,last_name = %s ,date_of_birth= %s ,mobile_number=%s ,gender=%s ,address=%s ,city=%s,state=%s ,zipcode=%s ,profile_updated_dt=%s WHERE user_id = %s', (firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt, uid))
-                db.connection.commit()
-                cur.execute('UPDATE Update_Profile SET profile_photo=%s WHERE id = %s', (filename, uid))
-                db.connection.commit()
-                flash('You Update Your Profile')   
-                return redirect('userhome')
-                
-                    
-                        
+                pdfnm = secure_filename(pdf.filename)
+                if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf'))==1:
+                    cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
+                    unm = cur.fetchone()
+                    filename=unm.get('user_name')
+                    aa=filename+'.png'
+                    filename=aa
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    pdfnm=unm.get('user_name')
+                    aa=pdfnm+'.pdf'
+                    pdfnm=aa
+                    pdf.save(os.path.join(app.config['UPLOAD_FOLDER_A'], pdfnm))
 
-    else:
+                    cur.execute('UPDATE Update_Profile SET first_name = %s,last_name = %s ,date_of_birth= %s ,mobile_number=%s ,gender=%s ,address=%s ,city=%s,state=%s ,zipcode=%s ,profile_updated_dt=%s WHERE user_id = %s', (firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt, uid))
+                    db.connection.commit()
+                    cur.execute('UPDATE Update_Profile SET profile_photo=%s,certificate_of_dob=%s WHERE id = %s', (filename,pdfnm, uid))
+                    db.connection.commit()
+                    flash('You Update Your Profile')   
+                    return redirect('userhome')
+                else:
+                     img='use file estension .png and .jpg for image'
+                     pdf=' and use ".pdf" for pdf'
+                return render_template('create_user_profile.html',img=img,values=values[0],pdf=pdf) 
+
+
+
+
+    else:   
         flash("Please Login")
         return  redirect("user_login")
     

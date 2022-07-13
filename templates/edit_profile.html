@@ -92,17 +92,18 @@
 
                             <label>gender:</label>
                             <div class="controls">
-                                <div class="form-control" >
-                                    <input name="gender" type="radio" value="Male" >Male
-                                    <input name="gender" type="radio" value="Female" >Female
-                                    
+                                <div class="form-control">
+                                    <input name="gender" type="radio" value="Male">Male
+                                    <input name="gender" type="radio" value="Female">Female
+
                                 </div>
                             </div>
                         </div>
                         <div class="control-group form-group">
                             <label>address:</label>
                             <div class="controls">
-                                <input class="form-control" name="address" type="text" value="{{Result.address}}" oninput="onaddress()" id="address">
+                                <input class="form-control" name="address" type="text" value="{{Result.address}}"
+                                    oninput="onaddress()" id="address">
                             </div>
                             <p style="color: red; font-size: 10px;" id="add">{{address}}</p>
                         </div>
@@ -171,14 +172,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="control-group form-group">
-                                <label>Profile photo</label>
-                                <div class="controls">
-                                    <input class="form-control" name="file" type="file" value="{{Result.profile_photo}}"
-                                        readonly>
-                                </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="control-group form-group">
+                                    <label>Profile photo</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="file" type="file"
+                                            value="{{Result.profile_photo}}" readonly>
+                                    </div>
 
+                                </div> <p style="color: red;">{{img}}</p>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="control-group form-group">
+                                    <label>Birth Cartificate</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="pdf" type="file"
+                                             >
+                                    </div>
+
+                                </div> <p style="color: red;">{{pdf}}</p>
                             </div>
                         </div>
                         <p style="color: red;">{{error}}</p>
