@@ -16,18 +16,17 @@
 </head>
 
 <body>
-    <ul class="nav nav-pills">
-
-        <li class="nav-item">
-            <a class="btn-primary btn m-1" href="/admin_logout" style="justify-content: end;">Logout</a>
-        </li>
-        <li class="nav-item">
-
-            <a class="btn-warning btn m-1" value="Go back!" onclick="history.back()"> Go back! </a>
-        </li>
-    </ul>
+    
     <div class="admin_bg space">
+        <div class="container">
+        <div class="jumbotron p-3 col-12">
+            <h2>  Create User Account <a class="btn-warning btn mr-1 float-right p-2" value="Go back!" onclick="history.back()"> Go back! </a>
+                <a class="btn btn-primary float-right mr-1 p-2"
+                    href="/admin_logout">Logout</a>
+            </h2>
+        </div></div>
         <div class="form1">
+            
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -35,7 +34,7 @@
                             <img src="../static/images/download__1_-removebg-preview.png" class="img">
                         </div>
                         <div class="col-lg-6">
-                            <h2 class="card-title">Add New User</h2>
+                           
                             <form action="{{url_for('create_user')}}" method="POST" onsubmit="createuser()"
                                 name="myform" id="login">
 

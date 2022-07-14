@@ -849,10 +849,7 @@ def update_profile():
                     return redirect('userhome')
                 else:
                     flash('asgfresdjyghufjkiygujtki8ogtrgterdhysgtfehyrd')
-        return redirect('editprofile')
-
-                
-                
+        return redirect('editprofile')           
     else:   
         flash("Please Login")
         return  redirect("user_login")
@@ -965,16 +962,13 @@ def signup():
             password='please enter valid password'
             return render_template('sign_up.html',password=password)
         else:
+            
             cur = db.connection.cursor()
-            cur.execute('SELECT email FROM User_login WHERE  email=%s', [email])
-            check = cur.fetchone()
-            mail=check.get('email')
-            A =request.form.get("email")
-            if A==mail:
+            if cur.execute('SELECT email FROM User_login WHERE  email=%s', [email])==1:
                 flash('you can not sign up our site becuse you already exist')
                 return redirect('user_login')
             else:
-                cur = db.connection.cursor()
+                
                 cur.execute(''' INSERT INTO User_login (email,user_name,password) VALUES(%s,%s,md5(%s))''',(email,username,password))
                 db.connection.commit()
                 msg = Message('Username and passeord for system login', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
@@ -991,6 +985,9 @@ def signup():
                     session['username'] = Result['user_name']
 
                     return redirect('userhome') 
+    else:
+        flash('noy sing up')
+        return redirect()
            
 
 if __name__ == "__main__":
