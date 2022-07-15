@@ -204,9 +204,10 @@
                                         <input class="form-control" name="pdf" type="file" accept=".pdf"
                                              >
                                     </div>
-
+                                    <a href="{{ url_for('display_pdf', pdfnm=pdfnm) }}" > Open Birth certificate </a>
                                 </div> <p style="color: red;">{{pdf}}</p>
                             </div>
+                            
                         </div>
                         <p style="color: red;">{{error}}</p>
 
