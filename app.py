@@ -114,8 +114,8 @@ def admin_home():
         Result=cur.fetchall()       
         return render_template('admin_home.html', Result = Result)
     else:
-        error='login please'
-        return render_template('admin_login.html',error=error)
+       
+        return redirect('admin_login')
     
     
     
@@ -187,10 +187,8 @@ def showuserdetails(id):
             
             cur.execute('SELECT certificate_of_dob FROM Update_Profile WHERE user_id = %s', [id])
             pdf=cur.fetchone()
-            pdfnm=pdf.get('certificate_of_dob')
-            
-            print(data[0])  
-         
+            pdfnm=pdf.get('certificate_of_dob')           
+            print(data[0])           
     
             return render_template('showuserdetails.html', Result=data[0],values=values[0],pdfnm=pdfnm,filename=filename)
         else:
@@ -199,8 +197,8 @@ def showuserdetails(id):
             Result=cur.fetchall()
             return render_template('admin_home.html',error=error,Result=Result)
     else:
-        error='login please'
-        return render_template('admin_login.html',error=error)
+        
+        return redirect('admin_login')
 
 
 
@@ -268,8 +266,8 @@ def admin_update_profile(id):
         
         return  redirect("/admin_home")
     else:
-        error='login please'
-        return render_template('admin_login.html',error=error)
+       
+        return redirect('/admin_login')
     
 
 #============================================== EDIT USER PASSWORD   =============================================
@@ -277,7 +275,6 @@ def admin_update_profile(id):
 @app.route('/editpassword/<id>')
 def editpassword(id):
     if 'loggedin' in session:
-
         cur = db.connection.cursor()
         cur.execute('SELECT * FROM User_login  WHERE id = %s',[id])
         data = cur.fetchall()
@@ -285,8 +282,8 @@ def editpassword(id):
         print(data[0])
         return render_template('editpassword.html', Result=data[0])
     else:
-        error='login please'
-        return render_template('admin_login.html',error=error)
+       
+        return redirect('admin_login')
 @app.route('/updatepassword/<id>', methods=['POST', 'GET'])
 def updatepassword(id):
     if 'loggedin' in session:
@@ -339,7 +336,7 @@ def updatepassword(id):
 #======================================   UPDATE USER   ============================================================
 
 @app.route('/edit/<id>')
-def get_user(id):
+def edit(id):
     if 'loggedin' in session:
         cur = db.connection.cursor()
         cur.execute('SELECT * FROM User_login  WHERE id = %s', [id])
@@ -348,7 +345,7 @@ def get_user(id):
         print(data[0])
         return render_template('edit_user.html', Result=data[0])
     else:
-        flash('login please')
+        
         return redirect('admin_login')
 
 
@@ -387,7 +384,7 @@ def update_user(id):
            
             return redirect('/admin_home')
     else:
-        flash('login please')
+        
         return redirect('admin_login')
 
 #============================================= Delete  ============================================================
@@ -438,7 +435,7 @@ def show_admin():
         Result=cur.fetchall()
         return render_template('showadmin.html', Result = Result)
     else:
-        flash('login please')
+        
         return redirect('admin_login')
 
 
@@ -468,7 +465,7 @@ def create_admin():
             flash('admin created')
         return redirect('showadmin')
     else:
-        flash('login please')
+        
         return redirect('admin_login')
 
 
@@ -484,7 +481,7 @@ def get_admin(id):
         print(data[0])
         return render_template('edit_admin.html', Result=data[0])
     else:
-        flash('login please')
+        
         return redirect('admin_login')
 
 
@@ -572,7 +569,7 @@ def userhome():
             flash('\n you create your ptofile right now')
             return render_template('user_home.html',Result="",filename=filename,msg=msg,valuse=valuse[0])
     else:
-        flash('login please')
+        
         return redirect('user_login')
    
     
@@ -594,7 +591,7 @@ def checkedprofile():
             print(values[0])
             return render_template('create_user_profile.html',values=values[0])
     else:
-        flash('Please Login')
+        
         return  redirect("user_login")
     
 
@@ -605,7 +602,7 @@ def insert_user_profile():
     if 'userloggedin' in session : 
         return render_template("create_user_profile.html")
     else:
-        flash('login please')
+        
         return redirect('user_login')
     
 
@@ -706,7 +703,7 @@ def insert_profile():
             return redirect('insert_user_profile')
 
     else:
-        flash('login please')
+        
         return redirect('user_login')
 
 @app.route('/display/<filename>')
@@ -757,7 +754,7 @@ def editprofile():
             flash('you not create your profile')
             return redirect('userhome')
     else:
-        flash('login pleasse')
+        
         return redirect('user_login')
         
    
