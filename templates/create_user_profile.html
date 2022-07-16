@@ -17,12 +17,7 @@
 
 <body>
     <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a class="btn-success btn m-1 aria-current=" href="/user_login">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="btn-primary btn m-1" href="/user_logout">Logout</a>
-        </li>
+        
         <li class="nav-item">
 
             <a class="btn-warning btn m-1" value="Go back!" onclick="history.back()"> Go back! </a>
@@ -66,7 +61,7 @@
 
                                     <input class="form-control" name="fname" type="text" required="required" id="uname"
                                         oninput="onname()">
-                                    <p style="color: red; font-size: 10px;" id="name">{{fname}}</p>
+                                    <p style="color: red; font-size: 15px;" id="name">{{fname}}</p>
 
                                 </div>
                             </div>
@@ -78,7 +73,7 @@
                                     <input class="form-control" name="lname" type="text" required="required" id="llname"
                                         oninput="onlastname()">
 
-                                    <p style="color: red; font-size: 10px;" id="lastname">{{lname}}</p>
+                                    <p style="color: red; font-size: 15px;" id="lastname">{{lname}}</p>
 
                                 </div>
                             </div>
@@ -103,7 +98,7 @@
                                 <input class="form-control" name="mobile_no" type="text" required="required"
                                     oninput="onmoblienumber()" id="mno" maxlength="10">
                             </div>
-                            <p style="color: red; font-size: 10px;" id="mnum">{{mobileno}}</p>
+                            <p style="color: red; font-size: 15px;" id="mnum">{{mobileno}}</p>
                         </div>
 
 
@@ -123,7 +118,7 @@
                                 <input class="form-control" name="address" type="text" required="required"
                                     onsubmit="onaddress()" oninput="onaddress()" id="address">
                             </div>
-                            <p style="color: red; font-size: 10px;" id="add">{{address}}</p>
+                            <p style="color: red; font-size: 15px;" id="add">{{address}}</p>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
@@ -133,7 +128,7 @@
 
                                     <input class="form-control" name="city" type="text" id="city" oninput="oncity()">
 
-                                    <p style="color: red; font-size:10px ;" id="oncity">{{city}}</p>
+                                    <p style="color: red; font-size:15px ;" id="oncity">{{city}}</p>
                                 </div>
                             </div>
                             <div class="col-ld-4">
@@ -186,7 +181,7 @@
                                         oninput="onzipcode()" id="zip">
 
 
-                                    <p style="color: red; font-size: 10px;" id="zipcode">{{zipcode}}</p>
+                                    <p style="color: red; font-size: 15px;" id="zipcode">{{zipcode}}</p>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +195,7 @@
                                     <input class="form-control" name="file" type="file" accept=".png,.jpg">
 
 
-                                    <p style="color: red; font-size: 10px;" id="zipcode">{{img}}</p>
+                                    <p style="color: red; font-size: 15px;" id="zipcode">{{img}}</p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -212,7 +207,7 @@
                                      <input class="form-control" name="pdf" type="file" accept=".pdf">
 
 
-                                    <p style="color: red; font-size: 10px;" id="zipcode">{{img}}</p>
+                                    <p style="color: red; font-size: 15px;" id="zipcode">{{img}}</p>
                                 </div>
                             </div>
                         </div>

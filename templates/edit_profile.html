@@ -16,7 +16,15 @@
 </head>
 
 <body>
-    <div class="admin_bg">
+   
+    <div class="user_bg">
+        <ul class="nav nav-pills">
+        
+            <li class="nav-item">
+    
+                <a class="btn-warning btn m-1" style="font-size: 20px;" value="Go back!" onclick="history.back()"> Go back! </a>
+            </li>
+        </ul>
         <div class="form1">
             <div class="card" style="width: 35rem;">
 
@@ -66,7 +74,7 @@
                                         <input class="form-control" name="fname" type="text"
                                             value="{{Result.first_name}}" id="uname" oninput="onname()">
                                     </div>
-                                    <p style="color: red; font-size: 10px;" id="name">{{fname}}</p>
+                                    <p style="color: red; font-size: 15px;" id="name">{{fname}}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -77,7 +85,7 @@
                                         <input class="form-control" name="lname" type="text"
                                             value="{{Result.last_name}}" id="llname" oninput="onlastname()">
                                     </div>
-                                    <p style="color: red; font-size: 10px;" id="lastname">{{lname}}</p>
+                                    <p style="color: red; font-size: 15px;" id="lastname">{{lname}}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -99,7 +107,7 @@
                                     value="{{Result.mobile_number}}" required="required" oninput="onmoblienumber()"
                                     id="mno" maxlength="10" minlength="10">
                             </div>
-                            <p style="color: red; font-size: 10px;" id="mnum">{{mobileno}}</p>
+                            <p style="color: red; font-size: 15px;" id="mnum">{{mobileno}}</p>
                         </div>
                         <div class="control-group form-group">
 
@@ -118,7 +126,7 @@
                                 <input class="form-control" name="address" type="text" value="{{Result.address}}"
                                     oninput="onaddress()" id="address">
                             </div>
-                            <p style="color: red; font-size: 10px;" id="add">{{address}}</p>
+                            <p style="color: red; font-size: 15px;" id="add">{{address}}</p>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
@@ -128,7 +136,7 @@
                                         <input class="form-control" name="city" type="text" value="{{Result.city}}"
                                             id="city" oninput="oncity()">
                                     </div>
-                                    <p style="color: red; font-size: 10px;" id="oncity">{{city}}</p>
+                                    <p style="color: red; font-size: 15px;" id="oncity">{{city}}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -169,7 +177,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <p style="color: red;">{{state}}</p>
+                                <p style="color: red; size: 15px;">{{state}}</p>
                             </div>
 
                             <div class="col-lg-4">
@@ -177,11 +185,11 @@
                                     <label>zipcode:</label>
                                     <div class="controls">
                                         <input class="form-control" name="zipcode" type="text"
-                                            value="{{Result.zipcode}}" required="required"
+                                            value="{{Result.zipcode}}" required="required" minlength="6" maxlength="6"
                                             data-validation-regex-regex="[0-9]+"
                                             data-validation-regex-message="please enter digit ">
                                     </div>
-                                    <p style="color: red;">{{zipcode}}</p>
+                                    <p style="color: red; size: 15px;">{{zipcode}}</p>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +209,7 @@
                                 <div class="control-group form-group">
                                     <label>Birth Cartificate</label>
                                     <div class="controls">
-                                        <input class="form-control" name="pdf" type="file" accept=".pdf"
+                                        <input class="form-control" name="pdf" type="file" accept=".pdf" 
                                              >
                                     </div>
                                     <a href="{{ url_for('display_pdf', pdfnm=pdfnm) }}" > Open Birth certificate </a>
