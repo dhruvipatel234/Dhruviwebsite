@@ -36,7 +36,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.permanent_session_lifetime = timedelta(minutes=100000)
 app.config['UPLOAD_FOLDER'] = "static/profilephoto/"
 app.config['UPLOAD_FOLDER_A'] = "static/pdf/"
-app.config['MAX_CONTENT_LENGTH'] = 1.5 * 1024 * 1024
+
   
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
   
@@ -652,6 +652,7 @@ def insert_profile():
 
             elif not re.match('[A-za-z]+',city):
                 city='please enter only alphabget'
+                return render_template('create_user_profile.html',city=city,values=values[0])
             elif not re.match('[A-za-z]+',state):
                 state='please enter only alphabet'
                 return render_template('create_user_profile.html',state=state,values=values[0])
@@ -668,7 +669,7 @@ def insert_profile():
             else:
                 filename = secure_filename(file.filename)
                 pdfnm = secure_filename(pdf.filename)
-                if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf'))==1:
+                if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf')) and app.config['MAX_CONTENT_LENGTH'] == 1024 :
 
                     cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
                     unm = cur.fetchone()
@@ -698,7 +699,7 @@ def insert_profile():
                     return render_template('user_home.html',msg=msg,Result=data[0],valuse=valuse[0],filename=filename,pdf=pdf)
                 else:
                 
-                    flash('use file estension .png and .jpg')
+                    flash('Use image .png or .jpg  and pdf use .pdf  and not allow more than 1mb size')
         else:
             return redirect('insert_user_profile')
 
@@ -826,7 +827,7 @@ def update_profile():
                
             else:
                
-                if filename.lower().endswith(('.png', '.jpg',)) and  pdfnm.lower().endswith(('.pdf'))==1:
+                if filename.lower().endswith(('.png', '.jpg',)) and  pdfnm.lower().endswith(('.pdf')) and app.config['MAX_CONTENT_LENGTH'] == 1024 :
                     cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
                     unm = cur.fetchone()
                     filename=unm.get('user_name')
@@ -845,7 +846,7 @@ def update_profile():
                     flash('You Update Your Profile')   
                     return redirect('userhome')
                 else:
-                    flash('asgfresdjyghufjkiygujtki8ogtrgterdhysgtfehyrd')
+                    flash('Use image .png or .jpg and pdf use .pdf ans not allow more than 1mb size')
         return redirect('editprofile')           
     else:   
         flash("Please Login")
