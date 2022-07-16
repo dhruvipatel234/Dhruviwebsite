@@ -36,7 +36,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.permanent_session_lifetime = timedelta(minutes=100000)
 app.config['UPLOAD_FOLDER'] = "static/profilephoto/"
 app.config['UPLOAD_FOLDER_A'] = "static/pdf/"
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 1.5 * 1024 * 1024
   
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
   
@@ -826,7 +826,7 @@ def update_profile():
                
             else:
                
-                if filename.lower().endswith(('.png', '.jpg',)) and   pdfnm.lower().endswith(('.pdf'))==1:
+                if filename.lower().endswith(('.png', '.jpg',)) and  pdfnm.lower().endswith(('.pdf'))==1:
                     cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
                     unm = cur.fetchone()
                     filename=unm.get('user_name')

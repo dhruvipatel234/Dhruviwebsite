@@ -35,14 +35,15 @@
                                 </p>
                                 <p style="color: red;">{{error}}</p>
                                 <img src="{{ url_for('display_image', filename=filename) }}" class="profileimg"
-                                    style="height: 150px; width: 150px;"><br>
+                                    style="height: 200px; width: 200px;"><br>
 
                                 <p>{{Result.first_name}} {{Result.last_name}} </p>
                                 <p> Email :-{{values.email}} </p>
                                 <p> User name :- {{values.user_name}} </p>
 
 
-                                <a href="{{ url_for('display_pdf_admin', pdfnm=pdfnm) }}">Open_Birth_certificate</a>
+                                <a href="{{ url_for('display_pdf_admin', pdfnm=pdfnm) }}" download>Download_Birth_certificate</a>
+                                <a href="{{ url_for('display_pdf_admin', pdfnm=pdfnm) }}" >Open_Birth_certificate</a>
                             </div>
                             <div class="col-lg-8">
                                 <form action="/admin_update_profile/{{Result.id}}" method="post"
