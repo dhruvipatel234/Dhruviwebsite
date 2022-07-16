@@ -790,7 +790,8 @@ def update_profile():
             filename = secure_filename(file.filename)
             pdfnm = secure_filename(pdf.filename) 
             print(data[0])   
-
+         
+            
             if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode:
                 error='please fill every field'
                 return render_template('edit_profile.html',error=error,Result=data[0],valuse=valuse[0])
@@ -821,13 +822,12 @@ def update_profile():
             elif not re.match('[0-9]+',zipcode):
                 zipcode='please enter only alphabet'
                 return render_template('edit_profile.html',zipcode=zipcode,Result=data[0],valuse=valuse[0])
-            
-                
+                           
                 
                
             else:
                
-                if filename.lower().endswith(('.png', '.jpg',)) and  pdfnm.lower().endswith(('.pdf')) and app.config['MAX_CONTENT_LENGTH'] == 1024 :
+                if filename.lower().endswith(('.png', '.jpg',)) and  pdfnm.lower().endswith(('.pdf')) :
                     cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
                     unm = cur.fetchone()
                     filename=unm.get('user_name')
@@ -846,7 +846,7 @@ def update_profile():
                     flash('You Update Your Profile')   
                     return redirect('userhome')
                 else:
-                    flash('Use image .png or .jpg and pdf use .pdf ans not allow more than 1mb size')
+                    flash('Use image .png or .jpg and pdf allow .pdf ans not allow more than 1mb size')
         return redirect('editprofile')           
     else:   
         flash("Please Login")
