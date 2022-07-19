@@ -21,8 +21,7 @@
         <div class="container">
         <div class="jumbotron p-3 col-12">
             <h2>  Create User Account <a class="btn-warning btn mr-1 float-right p-2" value="Go back!" onclick="history.back()"> Go back! </a>
-                <a class="btn btn-primary float-right mr-1 p-2"
-                    href="/admin_logout">Logout</a>
+                
             </h2>
         </div></div>
         <div class="form1">
@@ -57,25 +56,26 @@
                                     <p style="color: red;">{{username}}</p>
                                 </div>
                                 <div class="control-group form-group">
-                                    <label>Password:</label>
+                                    <label>Enter New Password:</label>
 
-                                    <input class="form-control" id="repassword" name="repassword" type="password"
+                                    <input class="form-control" id="newpassword" name="newpassword" type="password"
                                         oninput="onpassword()">
-                                    <input type="checkbox" onclick="password()"> Show Password
+
                                     <p id="password" style="font-size: 10px; color:red;"></p>
-                                    <p style="color: red;">{{password}}</p>
+                                    <p style="color: red;">{{newpassword}}</p>
 
                                 </div>
                                 <div class="control-group form-group">
 
                                     <label>confirm password:</label>
-                                    <div class="controls">
-                                        <input class="form-control" name="confirmpassword" type="password"
-                                            oninput="onrepassword()" id="onrepassword">
-                                        <p id="onpassword" style="font-size: 10px; color:red;"></p>
+
+                                    <input class="form-control" name="repassword" type="password" id="repassword"
+                                        oninput="checkpassword()">
+                                        <p id="aaa" style="font-size: 10px; color:red;"></p>
+                                    <input type="checkbox" onclick="password()"> Show Password
 
 
-                                    </div>
+                                    
                                     <p style="color: red;">{{repassword}}</p>
                                 </div>
                                 <p style="color: red;">{{error}}</p>

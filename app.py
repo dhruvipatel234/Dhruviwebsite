@@ -687,43 +687,35 @@ def insert_profile():
             else:
                 filename = secure_filename(file.filename)
                 pdfnm = secure_filename(pdf.filename)
-                if filename.lower().endswith(('.png', '.jpg',)) and pdfnm.lower().endswith(('.pdf')) and app.config['MAX_CONTENT_LENGTH'] == 1024 :
-
-                    cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
-                    unm = cur.fetchone()
-                    filename=unm.get('user_name')
-                    aa=filename+'.png'
-                    filename=aa
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-                    pdfnm=unm.get('user_name')
-                    aa=pdfnm+'.pdf'
-                    pdfnm=aa
-                    pdf.save(os.path.join(app.config['UPLOAD_FOLDER_A'], pdfnm))
-
-                    cur.execute(''' INSERT INTO Update_Profile (user_id,first_name,last_name,date_of_birth,mobile_number,gender,address,city,state,zipcode,profile_updated_dt,profile_photo,certificate_of_dob)
-                    VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(uid,firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt,filename,pdfnm))
-                    db.connection.commit()
-
-                    cur.execute('SELECT * FROM Update_Profile WHERE  user_id = %s ', [uid] )
-                    data=cur.fetchall()
-                    print(data)
-
-                    cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
-                    valuse = cur.fetchall()
-                    print(valuse[0])
-
-                    flash('Your Profile is created')
-                    return render_template('user_home.html',msg=msg,Result=data[0],valuse=valuse[0],filename=filename,pdf=pdf)
-                else:
                 
-                    flash('Use image .png or .jpg  and pdf use .pdf  and not allow more than 1mb size')
+
+                cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
+                unm = cur.fetchone()
+                filename=unm.get('user_name')
+                aa=filename+'.png'
+                filename=aa
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                pdfnm=unm.get('user_name')
+                aa=pdfnm+'.pdf'
+                pdfnm=aa
+                pdf.save(os.path.join(app.config['UPLOAD_FOLDER_A'], pdfnm))
+                cur.execute(''' INSERT INTO Update_Profile (user_id,first_name,last_name,date_of_birth,mobile_number,gender,address,city,state,zipcode,profile_updated_dt,profile_photo,certificate_of_dob)
+                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(uid,firstname,lastname,dob,mobileno,gender,address,city,state,zipcode,updated_dt,filename,pdfnm))
+                db.connection.commit()
+                cur.execute('SELECT * FROM Update_Profile WHERE  user_id = %s ', [uid] )
+                data=cur.fetchall()
+                print(data)
+                cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
+                valuse = cur.fetchall()
+                print(valuse[0])
+                flash('Your Profile is created')
+                return render_template('user_home.html',msg=msg,Result=data[0],valuse=valuse[0],filename=filename,pdf=pdf)
         else:
             return redirect('insert_user_profile')
 
     else:
-        
         return redirect('user_login')
+    
 
 @app.route('/display/<filename>')
 def display_image(filename):
