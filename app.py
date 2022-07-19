@@ -136,7 +136,7 @@ def create_user():
             email =request.form.get("email")
             username=request.form.get("username")
             password=request.form.get("repassword")
-
+            cur = db.connection.cursor()
             if not email or not username or not password:
                 error='please fill every field'
                 return render_template('create_user.html',error=error)
@@ -150,18 +150,24 @@ def create_user():
                 password='please enter valid password'
                 return render_template('create_user.html',password=password)
             else:
+                if cur.execute('SELECT email FROM User_login WHERE  email=%s', [email]):
+                    flash('you can not Create User becuse user email already exist')
+                    redirect('admin_home')
+                elif cur.execute('SELECT user_name FROM User_login WHERE  user_name=%s', [username]):
+                    flash('you can not Create User becuse user username already exist')
+                    redirect('admin_home')
+                else:
+                    cur = db.connection.cursor()
+                    cur.execute(''' INSERT INTO User_login (email,user_name,password) VALUES(%s,%s,md5(%s))''',(email,username,password))
+                    db.connection.commit()
+                    msg = Message('System Provide Username And Password for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
+                    msg.body = "Username :- " + username + "\n Passeord :- " + password + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
+                    mail.send(msg)
 
-                cur = db.connection.cursor()
-                cur.execute(''' INSERT INTO User_login (email,user_name,password) VALUES(%s,%s,md5(%s))''',(email,username,password))
-                db.connection.commit()
-                msg = Message('System Provide Username And Password for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
-                msg.body = "Username :- " + username + "\n Passeord :- " + password + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
-                mail.send(msg)
-
-                flash('user created')
-                cur.execute("select id,email,user_name,password from User_login") 
-                Result=cur.fetchall()
-                return redirect('/admin_home')
+                    flash('user created')
+                    
+                    return redirect('/admin_home')
+        return redirect('admin_home')
     else:
         error='login please'
         return render_template('admin_login.html',error=error)
@@ -792,7 +798,7 @@ def update_profile():
             print(data[0])   
          
             
-            if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode:
+            if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode or not file or not pdf:
                 error='please fill every field'
                 return render_template('edit_profile.html',error=error,Result=data[0],valuse=valuse[0])
             elif not re.match('[A-za-z]+',firstname):

@@ -198,7 +198,7 @@
                                 <div class="control-group form-group">
                                     <label>Profile photo</label>
                                     <div class="controls">
-                                        <input class="form-control" name="file" type="file" accept=".png ,.jpg"
+                                        <input class="form-control" name="file" type="file" accept=".png ,.jpg" 
                                             value="{{Result.profile_photo}}" readonly>
                                     </div>
 
@@ -213,7 +213,7 @@
                                              >
                                     </div>
                                     <a href="{{ url_for('display_pdf', pdfnm=pdfnm) }}" > Open Birth certificate </a>
-                                </div> <p style="color: red;">{{pdf}}</p>
+                                </div> <p style="color: red;" id="pdfnm">{{pdf}}</p>
                             </div>
                             
                         </div>
