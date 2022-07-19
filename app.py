@@ -364,7 +364,7 @@ def update_user(id):
         cur = db.connection.cursor()
         cur.execute('SELECT * FROM User_login  WHERE id = %s', [id])
         data = cur.fetchall()
-        cur.close()
+        
         print(data[0])
 
 
@@ -378,17 +378,29 @@ def update_user(id):
             username='please enter valid username'
             return render_template('edit_user.html',username=username,Result=data[0])
         else:
-            cur = db.connection.cursor()
-            cur.execute('UPDATE User_login SET email = %s,user_name = %s WHERE id = %s', (email, username, id))   
-            db.connection.commit()
-            cur.execute("select id,email,user_name from User_login") 
-            cur.fetchall()
-            msg = Message('System Update Username for login the system', sender = 'dhruvikaneriya52@gmail.com', recipients = [email] )
-            msg.body = "New Username :- " + username + "\n\n you can click on this link and login our website :-" + "http://127.0.0.1:5000/user_login"
-            mail.send(msg)
-            flash('email or username updated')
-           
-            return redirect('/admin_home')
+            if cur.execute('SELECT email FROM User_login WHERE  email=%s', [email]):
+                flash('gsfdhfdhgjhygt')
+                return redirect(url_for('edit',id=id))
+            else:
+                cur = db.connection.cursor()
+                cur.execute('UPDATE User_login SET email = %s WHERE id = %s', (email, id))   
+                db.connection.commit()
+                cur.execute("select id,email,user_name from User_login") 
+                cur.fetchall()
+                flash('email updated')
+            if cur.execute('SELECT user_name FROM User_login WHERE  user_name=%s', [username]):    
+                return redirect('admin_home')
+            else:
+                    cur = db.connection.cursor()
+                    cur.execute('UPDATE User_login SET user_name = %s WHERE id = %s', ( username, id))   
+                    db.connection.commit()
+                    cur.execute("select id,email,user_name from User_login") 
+                    cur.fetchall()
+                    flash('Username updated')
+                
+            
+
+        return redirect('/admin_home')
     else:
         
         return redirect('admin_login')
