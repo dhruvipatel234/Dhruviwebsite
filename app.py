@@ -19,7 +19,7 @@ from sqlalchemy import false, true, values
 app = Flask(__name__)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
+app.config['MAIL_PORT'] = 4656
 app.config['MAIL_USERNAME'] = 'dhruvikaneriya52@gmail.com'
 app.config['MAIL_PASSWORD'] = 'mtzfueqfvwitrhwx'
 app.config['MAIL_USE_TLS'] = False
@@ -378,18 +378,9 @@ def update_user(id):
             username='please enter valid username'
             return render_template('edit_user.html',username=username,Result=data[0])
         else:
-            if cur.execute('SELECT email FROM User_login WHERE  email=%s', [email]):
-                flash('gsfdhfdhgjhygt')
-                return redirect(url_for('edit',id=id))
-            else:
-                cur = db.connection.cursor()
-                cur.execute('UPDATE User_login SET email = %s WHERE id = %s', (email, id))   
-                db.connection.commit()
-                cur.execute("select id,email,user_name from User_login") 
-                cur.fetchall()
-                flash('email updated')
-            if cur.execute('SELECT user_name FROM User_login WHERE  user_name=%s', [username]):    
-                return redirect('admin_home')
+            if cur.execute('SELECT user_name FROM User_login WHERE  user_name=%s', [username]): 
+                flash('username alraedy exist')   
+                return redirect('/admin_home')
             else:
                     cur = db.connection.cursor()
                     cur.execute('UPDATE User_login SET user_name = %s WHERE id = %s', ( username, id))   
@@ -397,10 +388,8 @@ def update_user(id):
                     cur.execute("select id,email,user_name from User_login") 
                     cur.fetchall()
                     flash('Username updated')
-                
+            return redirect('/admin_home')
             
-
-        return redirect('/admin_home')
     else:
         
         return redirect('admin_login')
@@ -747,12 +736,15 @@ def editprofile():
         
         if cur.execute('SELECT * FROM Update_Profile  WHERE user_id = %s', [uid])==1:
             data = cur.fetchall()
+            cur.execute('SELECT gender FROM Update_Profile  WHERE user_id = %s', [uid])
+            da = cur.fetchone()
+            gender=da.get('gender')
             cur.execute('SELECT * FROM User_login WHERE id = %s', [uid])
             valuse = cur.fetchall()
             print(valuse[0])
             cur.close()   
             print(data[0])        
-            return render_template('edit_profile.html', Result=data[0],valuse=valuse[0])
+            return render_template('edit_profile.html', Result=data[0],valuse=valuse[0],gender=gender)
         else:
             cur.execute('SELECT * FROM Update_Profile WHERE  user_id = %s ', [uid] )
             data=cur.fetchall()
@@ -763,7 +755,7 @@ def editprofile():
             print(valuse[0])
             cur.close()
             flash('you not create your profile')
-            return redirect('userhome')
+            return redirect('/userhome')
     else:
         
         return redirect('user_login')
@@ -802,7 +794,7 @@ def update_profile():
             print(data[0])   
          
             
-            if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode or not file or not pdf:
+            if not firstname or not lastname or not dob or not mobileno or not gender or not address or not city or not state or not zipcode :
                 error='please fill every field'
                 return render_template('edit_profile.html',error=error,Result=data[0],valuse=valuse[0])
             elif not re.match('[A-za-z]+',firstname):
@@ -837,7 +829,7 @@ def update_profile():
                
             else:
                
-                if filename.lower().endswith(('.png', '.jpg',)) and  pdfnm.lower().endswith(('.pdf')) :
+                
                     cur.execute('SELECT user_name FROM User_login WHERE id = %s', [uid])
                     unm = cur.fetchone()
                     filename=unm.get('user_name')
@@ -855,8 +847,7 @@ def update_profile():
                     db.connection.commit()
                     flash('You Update Your Profile')   
                     return redirect('userhome')
-                else:
-                    flash('Use image .png or .jpg and pdf allow .pdf ans not allow more than 1mb size')
+                
         return redirect('editprofile')           
     else:   
         flash("Please Login")

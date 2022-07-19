@@ -33,6 +33,19 @@
                             <img src="../static/images/images (3).jpeg" class="mt-3">
                         </div>
                         <div class="col-lg-6">
+                            <p style="color: red; font-size: 20px;">
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+            
+                                {% for message in messages %}
+                                {{ message }}
+                                {% endfor %}
+            
+                                {% endif %}
+                                {% endwith %}
+                               
+                                {{passmsg}}
+                            </p>
                             <h2 class="card-title">User Update</h2>
                             <form action="/update/{{Result.id}}" method="POST" novalidate="novalidate" name="myform" onsubmit="edituser()">
                                 <div class="control-group form-group">
