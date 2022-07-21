@@ -16,13 +16,14 @@
 </head>
 
 <body>
-   
+
     <div class="user_bg">
         <ul class="nav nav-pills">
-        
+
             <li class="nav-item">
-    
-                <a class="btn-warning btn m-1" style="font-size: 20px;" value="Go back!" onclick="history.back()"> Go back! </a>
+
+                <a class="btn-warning btn m-1" style="font-size: 20px;" value="Go back!" onclick="history.back()"> Go
+                    back! </a>
             </li>
         </ul>
         <div class="form1">
@@ -33,14 +34,14 @@
                     <p style="color: red; font-size: 20px;">
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
-    
+
                         {% for message in messages %}
                         {{ message }}
                         {% endfor %}
-    
+
                         {% endif %}
                         {% endwith %}
-                       
+
                         {{passmsg}}
                     </p>
                     <form method="POST" action="/update_profile" novalidate="novalidate" enctype="multipart/form-data">
@@ -101,7 +102,7 @@
                             </div>
                         </div>
                         <div class="control-group form-group">
-                            <label>mobile_number:</label>
+                            <label>Mobile_number:</label>
                             <div class="controls">
                                 <input class="form-control" name="mobile_no" type="text"
                                     value="{{Result.mobile_number}}" required="required" oninput="onmoblienumber()"
@@ -111,17 +112,18 @@
                         </div>
                         <div class="control-group form-group">
 
-                            <label>gender:</label>
-                            <div class="controls">
-                                <div class="form-control">
-                                    <input name="gender" type="radio" value="Male">Male
-                                    <input name="gender" type="radio" value="Female">Female
+                            <label>Gender:</label>
 
-                                </div>
+                            <div class="form-control">
+                                <input name="gender" type="radio" value="male" id="ma">Male
+                                <input name="gender" type="radio" value="female" id="fe">Female
+                                <p id="sel" hidden>{{gender}}</p>
+
                             </div>
+
                         </div>
                         <div class="control-group form-group">
-                            <label>address:</label>
+                            <label>Address:</label>
                             <div class="controls">
                                 <input class="form-control" name="address" type="text" value="{{Result.address}}"
                                     oninput="onaddress()" id="address">
@@ -131,7 +133,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="control-group form-group">
-                                    <label>city:</label>
+                                    <label>City:</label>
                                     <div class="controls">
                                         <input class="form-control" name="city" type="text" value="{{Result.city}}"
                                             id="city" oninput="oncity()">
@@ -141,7 +143,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="control-group form-group">
-                                    <label>state:</label>
+                                  
                                     <label>State:</label>
                                     <div class="controls">
 
@@ -182,7 +184,7 @@
 
                             <div class="col-lg-4">
                                 <div class="control-group form-group">
-                                    <label>zipcode:</label>
+                                    <label>Zipcode:</label>
                                     <div class="controls">
                                         <input class="form-control" name="zipcode" type="text"
                                             value="{{Result.zipcode}}" required="required" minlength="6" maxlength="6"
@@ -198,24 +200,25 @@
                                 <div class="control-group form-group">
                                     <label>Profile photo</label>
                                     <div class="controls">
-                                        <input class="form-control" name="file" type="file" 
+                                        <input class="form-control" name="file" type="file"
                                             value="{{Result.profile_photo}}" readonly>
                                     </div>
 
-                                </div> <p style="color: red;">{{img}}</p>
+                                </div>
+                                <p style="color: red;">{{img}}</p>
                             </div>
 
                             <div class="col-lg-6 col-md-6">
                                 <div class="control-group form-group">
                                     <label>Birth Cartificate</label>
                                     <div class="controls">
-                                        <input class="form-control" name="pdf" type="file" accept=".pdf" 
-                                             >
+                                        <input class="form-control" name="pdf" type="file" accept=".pdf">
                                     </div>
-                                    <a href="{{ url_for('display_pdf', pdfnm=pdfnm) }}" > Open Birth certificate </a>
-                                </div> <p style="color: red;" id="pdfnm">{{pdf}}</p>
+                                    <a href="{{ url_for('display_pdf', pdfnm=pdfnm) }}"> Open Birth certificate </a>
+                                </div>
+                                <p style="color: red;" id="pdfnm">{{pdf}}</p>
                             </div>
-                            
+
                         </div>
                         <p style="color: red;">{{error}}</p>
 
@@ -230,7 +233,13 @@
         </div>
     </div>
     </div>
-
+    <script type="text/javascript">
+       value = "{{Result.gender}}"
+            const selectedValue = value;
+            const input = document.querySelector(`input[name="gender"][value="${selectedValue}"`);
+            if(input) input.checked = true;
+       
+    </script>
 </body>
 
 </html>
